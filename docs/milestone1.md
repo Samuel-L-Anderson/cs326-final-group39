@@ -20,7 +20,7 @@
     * Created message board wireframe, message board source code and completed milestone1md
 * William Hogan
     * Created dashboard wireframe and dash board source code
-* Gillian Handy
+* Gil Handy
     * Created calendar wireframe and calendar source code 
 * Tarun Patra
     * Created login wireframe and login page source code
