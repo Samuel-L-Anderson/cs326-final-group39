@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Discussion Page</title>
+    <link rel="stylesheet" href="message-board-style.css">
+    <link href="http://fonts.googleapis.com/css?family=Corben:bold" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Nobile" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <button type="button" class="btn btn-outline-dark">39Gs</button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto ">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        My Classes
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Class One</a>
+                        <a class="dropdown-item" href="#">Class Two</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Calendar</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button type="submit">Profile</button>
+            </form>
+        </div>
+    </nav>
+    <div class="top-bar">
+        <button class="btn" id="class-1">Class 1</button>
+        <button class="btn" id="class-2">Class 2</button>
+        <button class="btn" id="class-3">Class 3</button>
+        <button class="btn" id="class-4">Class 4</button>
+    </div>
+
+    <div class="main">
+        <div id="curDiscussionBoard">
+            <h3>Current Discussion</h3>
+        </div>
+        <div id="curChannel">
+            <h4>Current Channel</h4>
+        </div>
+    </div>
+
+    <div class="left">
+        <div class="box">
+            <div class="class-names">
+                <div class="c-name">
+                    <b>Class Name</b>
+                    <br>
+                    <!--Make buttons when backend is developed to enable switching between channels-->
+                    <p>General</p>
+                    <p>Lab</p>
+                    <p>Project</p>
+                    <p>Exam</p>
+                    <p>Homework</p>
+                    <p>Off Topic</p>
+                </div>
+            </div>
+            <div class="mini-box">
+                <div class="upvotes">
+                    <p>Highest Upvotes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="box">
+            <div class="members">
+                <div class="m-name">
+                    <p>Professor Name</p>
+                    <p>TA Name</p>
+                    <p>UCA Name</p>
+                    <p>Student Name 1</p>
+                    <p>Student Name 2</p>
+                    <p>Student Name 3</p>
+                    <p>Student Name 4</p>
+                </div>
+            </div>
+            <div class="mini-box">
+                <div class="upvotes">
+                    <p>Pinned Comments</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="container">
+        <div id="sendMessage">
+            <textarea id="messColumn" type="text"></textarea>
+            <input id="comment" type="image" src="/img/icons8-email-send-30.png">
+        </div>
+        <div id="content"></div>
+    </div>
+    <script src="message-board-scripts.js"></script>
+</body>
+
+</html>
