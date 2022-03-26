@@ -39,7 +39,24 @@ This wireframe illustrates the dashboard. The first page the user sees after log
 
 This wirefrme illustrates the calendar page.
 
-[![disussionboard.jpg](https://i.postimg.cc/ncpLHPFX/disussionboard.jpg)](https://postimg.cc/F1CvpGJv)
+[![mywireframe.jpg](https://i.postimg.cc/J0gKQk4g/mywireframe.jpg)](https://postimg.cc/xNvKfqmy)
 
 This wireframe is illustrating the message board/discussion channel aspect of the website.
 
+## HTML Images
+
+### Login Page
+
+[![Screen-Shot-2022-03-26-at-5-06-50-PM.png](https://i.postimg.cc/4xvbYMtj/Screen-Shot-2022-03-26-at-5-06-50-PM.png)](https://postimg.cc/Wd3JK557)
+
+### Dashboard 
+
+[![Screen-Shot-2022-03-26-at-5-01-33-PM.png](https://i.postimg.cc/pdqfZFsZ/Screen-Shot-2022-03-26-at-5-01-33-PM.png)](https://postimg.cc/rdRRyKX0)
+
+### Calendar
+
+[![Screen-Shot-2022-03-26-at-5-02-03-PM.png](https://i.postimg.cc/RCjDfk60/Screen-Shot-2022-03-26-at-5-02-03-PM.png)](https://postimg.cc/237GNXxp)
+
+### Discussion Board
+
+[![disussionboard.jpg](https://i.postimg.cc/ncpLHPFX/disussionboard.jpg)](https://postimg.cc/F1CvpGJv)
