@@ -55,3 +55,8 @@
     * Developed calendar API and front end calendar interactions
 
 ## Client Interface Screenshots
+
+[![Screen-Shot-2022-04-20-at-9-29-13-PM.png](https://i.postimg.cc/Hs3htcYH/Screen-Shot-2022-04-20-at-9-29-13-PM.png)](https://postimg.cc/zVb7zfHP)
+
+This screenshots illustrates a delete operation on our calendar page
+
