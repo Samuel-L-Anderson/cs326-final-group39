@@ -7,7 +7,7 @@ let assignments = [];
 
 const assignmentFiles = 'assignment.json';
 
-async function reload(filename) {
+async function reloadAssignments(filename) {
   try {
     const data = await readFile(filename, { encoding: 'utf8' });
     assignments = JSON.parse(data);
@@ -42,7 +42,7 @@ async function createAssignment(response, month, day, year, name, assignment_id,
     response.status(404).json({ error: `Assignment could not be created` });
     } 
   else {
-    await reload(assignmentFiles);
+    await reloadAssignments(assignmentFiles);
     let newAssignment = {"month":month, 
                         "day": day, 
                         "year": year, 
@@ -56,7 +56,7 @@ async function createAssignment(response, month, day, year, name, assignment_id,
 }
 
 async function readDate(response, month, day, year) {
-  await reload(assignmentFiles);
+  await reloadAssignments(assignmentFiles);
   let assignmentDates = [];
   if (!(month === undefined || day === undefined || year === undefined)) {
     for( let i = 0; i < assignments.length; i++)
@@ -73,7 +73,7 @@ async function readDate(response, month, day, year) {
 }
 
 async function updateAssignment(response, month, day, year, name, assignment_id, class_id) {
-  await reload(assignmentFiles);
+  await reloadAssignments(assignmentFiles);
   if (assignmentExists(assignment_id)) {
     const index = getAssignmentIndex(assignment_id);
     assignments[index] = {"month":month, 
@@ -91,7 +91,7 @@ async function updateAssignment(response, month, day, year, name, assignment_id,
 }
 
 async function deleteAssignment(response, assignment_id) {
-  await reload(assignmentFiles);
+  await reloadAssignments(assignmentFiles);
   if (assignmentExists(assignment_id)) {
     const index = getAssignmentIndex(assignment_id);
     assignments.splice(index, 1);
