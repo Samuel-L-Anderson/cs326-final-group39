@@ -60,3 +60,11 @@
 
 This screenshots illustrates a delete operation on our calendar page
 
+[![frontendclientstuff.jpg](https://i.postimg.cc/RZw4RmKr/frontendclientstuff.jpg)](https://postimg.cc/BjZrSdmN)
+
+[![frontendpost.jpg](https://i.postimg.cc/PrwjXH6L/frontendpost.jpg)](https://postimg.cc/Mvq45CJx)
+
+These two screenshots illustrate a POST request updating the message board.
+
+
+
