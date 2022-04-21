@@ -297,6 +297,65 @@ app.delete('/deleteAssignment', async (request, response) => {
 app.all('*', async (request, response) => {
     response.status(404).send(`Not found: ${request.path}`)
 });
+let users = [];
+const JSONfile = 'users.json';
+async function reload(filename) {
+    try {
+        const data = await readFile(filename, { encoding: 'utf8' });
+        users = JSON.parse(data);
+    } catch (err) {
+        users = {};
+    }
+}
+async function saveUsers() {
+    try {
+        const data = JSON.stringify(users);
+        await writeFile(JSONfile, data, { encoding: 'utf8' });
+    } catch (err) {
+        console.log(err);
+    }
+}
+async function createUser(response,options) {
+    if (options === undefined) {
+        response.status(400).json({ error: 'Login Error' });
+    } else {
+        await reload(JSONfile);
+        if(options.spireId in users){
+            response.json({error:'spireId already exists'});
+        }
+        users[options.spireId] = options;
+        await saveUsers();
+        response.json(options);
+    }
+}
+async function readUser(response,options) {
+    if (options === undefined) {
+        response.status(400).json({ error: 'Registration Error' });
+    } else {
+        await reload(JSONfile);
+        if (options.spireId in users){
+            if (options.email === users[options.spireId].email && options.password === users[options.spireId].password){
+                response.json(users[options.spireId]);
+            }
+            else{
+                response.status(400).json({error :"No users found"});
+            }
+        }
+        else{
+            response.status(400).json({error:"Incorrect spireId"});
+        }
+    }
+}
+app.post('/registration',async(request,response) =>{
+    const options = request.body;
+    console.log(request.body);
+    createUser(response,options);
+});
+app.get('/login',async(request,response) =>{
+    const options = request.query;
+    console.log(request.query);
+    readUser(response,options);
+});
 
 app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);
