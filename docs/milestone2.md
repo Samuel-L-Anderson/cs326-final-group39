@@ -37,3 +37,21 @@
         * This functionality allows the user to edit any assignments that they have created themselves. Assignments that are created by the instructor are not able to be edited by students. 
     * DELETE Assignment
         * This functionality allows the user to delete any assignments that they have created. The same rules apply here as for the Edit function. 
+* Login
+    * Create User
+        * Creates user
+    * Read User
+        * Reads user information
+
+## Division of Labor
+
+* Samuel Anderson
+    * Developed Message Board API and front end message board interactions
+* Tarun Patra
+    * Developed login page API and front end login page interactions
+* William Hogan
+    * Developed Dashboard API and front end dashboard interactions
+* Gil Handy
+    * Developed calendar API and front end calendar interactions
+
+## Client Interface Screenshots
