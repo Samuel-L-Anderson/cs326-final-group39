@@ -72,3 +72,12 @@ These two screenshots illustrate a POST request being done on client side, updat
 
 These two screenshots illustrate a read being performed on the dashboard.
 
+[![login0.jpg](https://i.postimg.cc/fLpQhW9R/login0.jpg)](https://postimg.cc/5YBRBVgh)
+
+[![login1.jpg](https://i.postimg.cc/YSC5GLNS/login1.jpg)](https://postimg.cc/VJ2G26Vy)
+
+[![login2.jpg](https://i.postimg.cc/B68RNWV9/login2.jpg)](https://postimg.cc/YGHXqP7b)
+
+[![login2.jpg](https://i.postimg.cc/B68RNWV9/login2.jpg)](https://postimg.cc/YGHXqP7b)
+
+These four screenshots illustrate postman requests and the frontend integration of our login page.
