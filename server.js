@@ -298,19 +298,6 @@ app.delete('/deleteAssignment', async (request, response) => {
     deleteAssignment(response, parseInt(details.assignment_id));
 });
 
-app.all('*', async (request, response) => {
-    response.status(404).send(`Not found: ${request.path}`)
-});
-let users = [];
-const JSONfile = 'users.json';
-async function reload(filename) {
-    try {
-        const data = await readFile(filename, { encoding: 'utf8' });
-        users = JSON.parse(data);
-    } catch (err) {
-        users = {};
-    }
-}
 async function saveUsers() {
     try {
         const data = JSON.stringify(users);
@@ -360,6 +347,20 @@ app.get('/login', async (request, response) => {
     console.log(request.query);
     readUser(response, options);
 });
+
+app.all('*', async (request, response) => {
+    response.status(404).send(`Not found: ${request.path}`)
+});
+let users = [];
+const JSONfile = 'users.json';
+async function reload(filename) {
+    try {
+        const data = await readFile(filename, { encoding: 'utf8' });
+        users = JSON.parse(data);
+    } catch (err) {
+        users = {};
+    }
+}
 
 app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);
