@@ -44,6 +44,106 @@ async function saveMessages() {
     }
 }
 
+let assignments = [];
+
+const assignmentFiles = 'assignment.json';
+
+async function reloadAssignments(filename) {
+  try {
+    const data = await readFile(filename, { encoding: 'utf8' });
+    assignments = JSON.parse(data);
+  } catch (err) {
+    assignments = [];
+  }
+}
+
+async function saveAssignments() {
+  try {
+    const data = JSON.stringify(assignments);
+    await writeFile(assignmentFiles, data, { encoding: 'utf8' });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function assignmentExists(assignment_id){
+  if (assignments.filter(x => x['assignment_id'] === assignment_id).length > 0) {
+  }
+}
+
+function getAssignmentIndex(assignment_id){
+  const index = assignments.map(object => object['assignment_id']).indexOf(assignment_id);
+  return index;
+}
+
+
+async function createAssignment(response, month, day, year, name, assignment_id, class_id) {
+  if (assignment_id === undefined) {
+    // 400 - Bad Request
+    response.status(404).json({ error: `Assignment could not be created` });
+    } 
+  else {
+    await reloadAssignments(assignmentFiles);
+    let newAssignment = {"month":month, 
+                        "day": day, 
+                        "year": year, 
+                        "name": name, 
+                        "assignment_id": assignment_id,
+                        "class_id": class_id};
+    assignments.push(newAssignment);
+    await saveAssignments();
+    response.json({month:month, day: day, year: year, name: name, assignment_id: assignment_id, class_id: class_id});
+  }
+}
+
+async function readDate(response, month, day, year) {
+  await reloadAssignments(assignmentFiles);
+  let assignmentDates = [];
+  if (!(month === undefined || day === undefined || year === undefined)) {
+    for( let i = 0; i < assignments.length; i++)
+    {
+      assignmentDates = assignments.filter(x => x['day'] === day && 
+                                                x['month'] === month && 
+                                                x['year'] === year);
+    }
+    response.json({ day:day, month: month, year:year, assignments: assignmentDates });
+  } else {
+    // 404 - Not Found
+    response.json({ error: `No Assignments on '${month}' ${day}, ${year}` });
+  }
+}
+
+async function updateAssignment(response, month, day, year, name, assignment_id, class_id) {
+  await reloadAssignments(assignmentFiles);
+  if (assignmentExists(assignment_id)) {
+    const index = getAssignmentIndex(assignment_id);
+    assignments[index] = {"month":month, 
+                          "day": day, 
+                          "year": year, 
+                          "name": name, 
+                          "assignment_id": assignment_id, 
+                          "class_id": class_id };
+    await saveAssignments();
+    response.json({month:month, day: day, year: year, name: name, assignment_id: assignment_id, class_id: class_id});
+  } else {
+    // 404 - Not Found
+    response.status(404).json({ error: `Assignment '${name}' Not Found` });
+  }
+}
+
+async function deleteAssignment(response, assignment_id) {
+  await reloadAssignments(assignmentFiles);
+  if (assignmentExists(assignment_id)) {
+    const index = getAssignmentIndex(assignment_id);
+    assignments.splice(index, 1);
+    await saveAssignments();
+    response.json({ id:assignment_id });
+  } else {
+    // 404 - Not Found
+    response.status(404).json({ error: `Assignment '${assignment_id}' Not Found` });
+  }
+}
+
 app.get('/class', async (request, response) => {
     //http://localhost:3000/class?class=cs326
     //Retrieves information of class, i.e. student count, id
@@ -127,6 +227,41 @@ app.post('/message', async (request, response) => {
     message_records.push(message_entry);
     saveMessages();
     response.send(message_entry);
+});
+
+app.post('/createAssignment', async (request, response) => {
+  const details = request.query;
+  createAssignment(response, 
+                  parseInt(details.month), 
+                  parseInt(details.day), 
+                  parseInt(details.year), 
+                  details.name, 
+                  parseInt(details.assignment_id),
+                  parseInt(details.class_id));
+});
+
+app.get('/readDate', async (request, response) => {
+  const details = request.query;
+  readDate(response, 
+          parseInt(details.month), 
+          parseInt(details.day), 
+          parseInt(details.year));
+        });
+
+app.put('/updateAssignment', async (request, response) => {
+  const details = request.query;
+  updateAssignment(response, 
+                  parseInt(details.month), 
+                  parseInt(details.day), 
+                  parseInt(details.year), 
+                  details.name, 
+                  parseInt(details.assignment_id),
+                  parseInt(details.class_id));
+});
+
+app.delete('/deleteAssignment', async (request, response) => {
+  const details = request.query;
+  deleteAssignment(response, parseInt(details.assignment_id));
 });
 
 app.all('*', async (request, response) => {
