@@ -38,10 +38,10 @@
     * DELETE Assignment
         * This functionality allows the user to delete any assignments that they have created. The same rules apply here as for the Edit function. 
 * Login
-    * Create User
-        * Creates user
-    * Read User
-        * Reads user information
+    * POST Registration
+        * The server will reeive a JSON body of email, password, and spire ID and create a new user if the primary key (spire ID) hasn't been used before. It will return an alert telling the user that the registration was successful.
+    * GET login
+        * The end point will return an alert telling the user that login was successful.
 
 ## Division of Labor
 
@@ -64,7 +64,11 @@ This screenshots illustrates a delete operation on our calendar page
 
 [![frontendpost.jpg](https://i.postimg.cc/PrwjXH6L/frontendpost.jpg)](https://postimg.cc/Mvq45CJx)
 
-These two screenshots illustrate a POST request updating the message board.
+These two screenshots illustrate a POST request being done on client side, updating the message board.
 
+[![Screen-Shot-2022-04-20-at-10-20-53-PM.png](https://i.postimg.cc/7ZPrgzHz/Screen-Shot-2022-04-20-at-10-20-53-PM.png)](https://postimg.cc/MvLLwvjZ)
 
+[![Screen-Shot-2022-04-20-at-10-21-34-PM.png](https://i.postimg.cc/fbp4ngx7/Screen-Shot-2022-04-20-at-10-21-34-PM.png)](https://postimg.cc/7C3tS9tb)
+
+These two screenshots illustrate a read being performed on the dashboard.
 
