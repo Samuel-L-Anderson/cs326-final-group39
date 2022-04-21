@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="project_calendar.css" />
+    <link rel="stylesheet" href="project.css" />
+    <script type="module" src="calendar.js" defer></script>
   </head>
   <body>
       <div class='calendar'>
         <div class='date'>
           <div class="time">
-            <h2>MARCH</h2>
+            <h2 id="month"></h2>
           </div>
           <div class='week'>
             <ul>
@@ -20,8 +21,13 @@
               <li>Sat</li>
             </ul>
           </div>
-          <div class="days">
-            <ul>
+          <div class="days" id = "days">
+            <ul id="day_wrap">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
               <li>1</li>
               <li>2</li>
               <li>3</li>
@@ -52,15 +58,12 @@
               <li>28</li>
               <li>29</li>
               <li>30</li>
-              <li>31</li>
             </ul>
           </div>
-          <div class="todays-date">
-            Saturday, March 26, 2022
-            <button>Add Assignment</button>
+          <div class="todays-date" id="date_today">
             <div class="title">
               Assignments:
-              <ul>
+              <ul id="assignments-ul">
                 <li>Milestone 1</li>
                 <li>Homework 5</li>
                 <li>Project Meeting</li>
@@ -69,6 +72,12 @@
           </div>
         </div>
       </div>
+      <input type="button" value="Create Assignment" id="create" />
+      <br>
+      <input type="button" value="Update Assignment" id="update" />
+      <br>
+      <input type="button" value="Delete Assignment" id="delete" />
+      <br>
 
   </body>
 </html>

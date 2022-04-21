@@ -28,34 +28,6 @@ let assignment_records = [{ class_id: '3', day: '20', month: '3', year: '2022', 
 
 let message_records = [];
 
-app.get('/dashboard', async (request, response) => {
-    console.log("hello from server");
-    const options = request.query;
-    const user = options.user;
-    let tempUserRecords = user_records;
-    let tempClassRecords = class_records;
-    const classesArr = tempUserRecords.filter(item => item.user_id === user)[0].inClasses;
-    console.log(classesArr);
-    let userClasses = class_records;
-    console.log(userClasses);
-    response.send(userClasses);
-})
-
-app.get('/dueToday', async (request, response) => {
-    const options = request.query;
-    const class_id = options.id;
-    const current = new Date();
-    let dueToday = assignment_records.filter(item => (
-        class_id === item.class_id &&
-        item.day === current.getDay() &&
-        item.month === current.getMonth() &&
-        item.year === current.getFullYear()
-    ));
-    const returnVal = (dueToday.length > 0) ? dueToday[0].assignment_name : "N/A";
-    console.log(returnVal);
-    response.send(returnVal);
-});
-
 async function reloadMessages() {
     try {
         const data = await readFile(MESSAGE_FILE, { encoding: 'utf8' });
@@ -176,6 +148,35 @@ async function deleteAssignment(response, assignment_id) {
         response.status(404).json({ error: `Assignment '${assignment_id}' Not Found` });
     }
 }
+
+
+app.get('/dashboard', async (request, response) => {
+    console.log("hello from server");
+    const options = request.query;
+    const user = options.user;
+    let tempUserRecords = user_records;
+    let tempClassRecords = class_records;
+    const classesArr = tempUserRecords.filter(item => item.user_id === user)[0].inClasses;
+    console.log(classesArr);
+    let userClasses = class_records;
+    console.log(userClasses);
+    response.send(userClasses);
+})
+
+app.get('/dueToday', async (request, response) => {
+    const options = request.query;
+    const class_id = options.id;
+    const current = new Date();
+    let dueToday = assignment_records.filter(item => (
+        class_id === item.class_id &&
+        item.day === current.getDay() &&
+        item.month === current.getMonth() &&
+        item.year === current.getFullYear()
+    ));
+    const returnVal = (dueToday.length > 0) ? dueToday[0].assignment_name : "N/A";
+    console.log(returnVal);
+    response.send(returnVal);
+});
 
 app.get('/class', async (request, response) => {
     //http://localhost:3000/class?class=cs326
