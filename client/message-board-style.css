@@ -29,11 +29,11 @@ div {
 }
 
 .btn:hover {
-    background: #26242B;
+    background: #2a3034;
 }
 
 .top-bar {
-    background-color:#19171D;
+    background-color:#212529;
     padding-left: 50px;
 }
 
@@ -67,18 +67,17 @@ div {
     font-size: 10px;
 }
 .right{
-    flex: 2;
+    flex: 1;
     display: flex;
     flex-direction: column;
    
-    /* background-color:  #19171D; */
+    background-color:  #19171D;
 }
 
 .right .members{
     margin: 2%;
-    border-left: 1px solid #2C2A2F;
     background-color: #19171D;
-    border-radius: 10px;
+    height: 100vh;
 }
 .right .members .m-name>p {
     padding: 10px;
@@ -95,27 +94,24 @@ textarea {
 }
 
 #sendMessage {
-    width: 30%;
-    height: 50px;
-    line-height: 50px;
+   display: flex;
 }
 
 #messColumn {
-    width: 500px;
-    height: 100px;
-    position: absolute;
-    bottom: 0;
-    margin-left: 22%;
+   background-color: #222529;
+   border-radius: 5px;
+   width: 60%;
+   margin: 10px;
 }
 
 #comment {
     position: absolute;
     right: 0;
     bottom: 0;
-    margin-bottom: 0px;
-    margin-right: 23%;
-    width: 150px;
-    height: 100px;
+    margin-bottom: 35px;
+    margin-right: 17.5%;
+    width: 50px;
+    height: 50px;
 }
 input[type = 'button']{
     width: 100%;
@@ -140,7 +136,7 @@ input[type = 'button']{
     width: 100%;
 }
 #content{
-    width: 60%;
+    width: 80%;
     display:flex;
     flex-direction: column;
 }
@@ -151,4 +147,17 @@ input[type = 'button']{
     background-color: #2C2A2F;
     border-radius: 5px;
     color:#A3A2A6;
+}
+.class-body{
+    flex:5;
+    display: flex;
+    flex-direction: column;
+}
+.message-body{
+    display: flex;
+}
+.written{
+    flex:5;
+    display: flex;
+    flex-direction: column;
 }

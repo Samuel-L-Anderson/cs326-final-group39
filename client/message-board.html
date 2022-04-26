@@ -45,17 +45,6 @@
             </form>
         </div>
     </nav>
-    <div class="top-bar">
-        <button class="btn" id="class-1">Class 1</button>
-        <button class="btn" id="class-2">Class 2</button>
-        <button class="btn" id="class-3">Class 3</button>
-        <button class="btn" id="class-4">Class 4</button>
-    </div>
-
-    <div class="main" style = "background-color: #19171D;">
-        <div id="curDiscussionBoard"></div>
-        <div id="curChannel"></div>
-    </div>
     <div class = "msg-bod">
     <div class="left">
             <div class="class-names">
@@ -69,7 +58,26 @@
                 </div>
         </div>
     </div>
+    <div class = "class-body">
+    <div class="top-bar">
+        <button class="btn" id="class-1">Class 1</button>
+        <button class="btn" id="class-2">Class 2</button>
+        <button class="btn" id="class-3">Class 3</button>
+        <button class="btn" id="class-4">Class 4</button>
+    </div>
+
+    <div class="main" style = "background-color: #212529;">
+        <div id="curDiscussionBoard"></div>
+        <div id="curChannel"></div>
+    </div>
+    <div class = "message-body">
+    <div class = "written">
     <div id="content"></div>
+    <div id="sendMessage" class="sendMessage">
+        <textarea id="messColumn" type="text"></textarea>
+        <input id="comment" type="image" src="./img/icons8-email-send-30.png">
+    </div>
+    </div>
     <div class ="right">
         <div class="members">
             <div class="m-name">
@@ -84,10 +92,8 @@
         </div>
     </div>
     </div>
-        <div id="sendMessage">
-            <textarea id="messColumn" type="text"></textarea>
-            <input id="comment" type="image" src="/img/icons8-email-send-30.png">
-        </div>
+    </div>
+    </div>
     </div>
     <script type="module" src="message-board-scripts.js"></script>
 </body>
