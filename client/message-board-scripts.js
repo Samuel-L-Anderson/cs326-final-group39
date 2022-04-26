@@ -18,28 +18,28 @@ var class_4_btn = document.getElementById('class-4');
 
 
 
-async function renderClasses(user) {
-    let filteredUser = await message_crud.getUser(user)
-    let class_records = await message_crud.getClasses();
-    let class_id_1 = class_records.filter(item => {
-        return item.class_id.indexOf(filteredUser[0].inClasses[0]) !== -1;
-    });
-    let class_id_2 = class_records.filter(item => {
-        return item.class_id.indexOf(filteredUser[0].inClasses[1]) !== -1;
-    });
-    let class_id_3 = class_records.filter(item => {
-        return item.class_id.indexOf(filteredUser[0].inClasses[2]) !== -1;
-    });
-    let class_id_4 = class_records.filter(item => {
-        return item.class_id.indexOf(filteredUser[0].inClasses[3]) !== -1;
-    });
-    class_1_btn.innerHTML = class_id_1[0].class;
-    class_2_btn.innerHTML = class_id_2[0].class;
-    class_3_btn.innerHTML = class_id_3[0].class;
-    class_4_btn.innerHTML = class_id_4[0].class;
-}
+// async function renderClasses(user) {
+//     let filteredUser = await message_crud.getUser(user)
+//     let class_records = await message_crud.getClasses();
+//     let class_id_1 = class_records.filter(item => {
+//         return item.class_id.indexOf(filteredUser[0].inClasses[0]) !== -1;
+//     });
+//     let class_id_2 = class_records.filter(item => {
+//         return item.class_id.indexOf(filteredUser[0].inClasses[1]) !== -1;
+//     });
+//     let class_id_3 = class_records.filter(item => {
+//         return item.class_id.indexOf(filteredUser[0].inClasses[2]) !== -1;
+//     });
+//     let class_id_4 = class_records.filter(item => {
+//         return item.class_id.indexOf(filteredUser[0].inClasses[3]) !== -1;
+//     });
+//     class_1_btn.innerHTML = class_id_1[0].class;
+//     class_2_btn.innerHTML = class_id_2[0].class;
+//     class_3_btn.innerHTML = class_id_3[0].class;
+//     class_4_btn.innerHTML = class_id_4[0].class;
+// }
 
-renderClasses(1);
+// renderClasses(1);
 
 
 //FAKE CURRENTLY UNTIL ALL CLASSES ADDED TO DB
@@ -94,9 +94,11 @@ general.addEventListener('click', async (e) => {
     const json = await message_crud.getMessages(num);
     for (const item of json) {
         var messDiv = document.createElement('div');
-        messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
+        // messDiv.setAttribute("style", "width:100%;height:50px;border:1px solid #808080;margin-bottom:5px;");
+        messDiv.classList.add("msg-line");
         var messCon = document.createElement("div");
-        messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        messCon.classList.add("msg");
         messDiv.appendChild(messCon);
         messCon.innerHTML = item;
         con.appendChild(messDiv);
@@ -111,9 +113,11 @@ lab.addEventListener('click', async (e) => {
     const json = await message_crud.getMessages(num);
     for (const item of json) {
         var messDiv = document.createElement('div');
-        messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
+        messDiv.classList.add("msg-line");
+        // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid green;margin-bottom:5px;");
         var messCon = document.createElement("div");
-        messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        messCon.classList.add("msg");
         messDiv.appendChild(messCon);
         messCon.innerHTML = item;
         con.appendChild(messDiv);
@@ -128,9 +132,11 @@ project.addEventListener('click', async (e) => {
     const json = await message_crud.getMessages(num);
     for (const item of json) {
         var messDiv = document.createElement('div');
-        messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
+        messDiv.classList.add("msg-line");
+        // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
         var messCon = document.createElement("div");
-        messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        messCon.classList.add("msg");
         messDiv.appendChild(messCon);
         messCon.innerHTML = item;
         con.appendChild(messDiv);
@@ -145,9 +151,11 @@ exam.addEventListener('click', async (e) => {
     const json = await message_crud.getMessages(num);
     for (const item of json) {
         var messDiv = document.createElement('div');
-        messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
+        messDiv.classList.add("msg-line");
+        // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
         var messCon = document.createElement("div");
-        messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        messCon.classList.add("msg");
         messDiv.appendChild(messCon);
         messCon.innerHTML = item;
         con.appendChild(messDiv);
@@ -162,9 +170,11 @@ homework.addEventListener('click', async (e) => {
     const json = await message_crud.getMessages(num);
     for (const item of json) {
         var messDiv = document.createElement('div');
-        messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
+        messDiv.classList.add("msg-line");
+        // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
         var messCon = document.createElement("div");
-        messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        messCon.classList.add("msg");
         messDiv.appendChild(messCon);
         messCon.innerHTML = item;
         con.appendChild(messDiv);
@@ -179,9 +189,11 @@ off_topic.addEventListener('click', async (e) => {
     const json = await message_crud.getMessages(num);
     for (const item of json) {
         var messDiv = document.createElement('div');
-        messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
+        messDiv.classList.add("msg-line");
+        // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
         var messCon = document.createElement("div");
-        messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+        messCon.classList.add("msg");
         messDiv.appendChild(messCon);
         messCon.innerHTML = item;
         con.appendChild(messDiv);
@@ -190,9 +202,11 @@ off_topic.addEventListener('click', async (e) => {
 
 btn.addEventListener('click', async (e) => {
     var messDiv = document.createElement("div");
-    messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
+    messDiv.classList.add("msg-line");
+    // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
     var messCon = document.createElement("div");
-    messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+    // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+    messCon.classList.add("msg");
     messDiv.appendChild(messCon);
     messCon.innerHTML = messCol.value;
     con.appendChild(messDiv);

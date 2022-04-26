@@ -294,9 +294,6 @@ app.delete('/deleteAssignment', async (request, response) => {
   deleteAssignment(response, parseInt(details.assignment_id));
 });
 
-app.all('*', async (request, response) => {
-    response.status(404).send(`Not found: ${request.path}`)
-});
 let users = [];
 const JSONfile = 'users.json';
 async function reload(filename) {
@@ -356,7 +353,9 @@ app.get('/login',async(request,response) =>{
     console.log(request.query);
     readUser(response,options);
 });
-
+app.all('*', async (request, response) => {
+  response.status(404).send(`Not found: ${request.path}`)
+});
 app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);
 });

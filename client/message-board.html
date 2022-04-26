@@ -13,7 +13,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
-<body>
+<body style = "background-color: #1B1D21;">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
         <button type="button" class="btn btn-outline-dark">39Gs</button>
@@ -52,68 +52,42 @@
         <button class="btn" id="class-4">Class 4</button>
     </div>
 
-    <div class="main">
+    <div class="main" style = "background-color: #19171D;">
         <div id="curDiscussionBoard"></div>
         <div id="curChannel"></div>
     </div>
-
+    <div class = "msg-bod">
     <div class="left">
-        <div class="box">
             <div class="class-names">
                 <div class="c-name">
-                    <br>
-                    <button id="general">general</button>
-                    <br>
-                    <br>
-                    <button id="lab">lab</button>
-                    <br>
-                    <br>
-                    <button id="project">Project</button>
-                    <br>
-                    <br>
-                    <button id="exam">exam</button>
-                    <br>
-                    <br>
-                    <button id="homework">homework</button>
-                    <br>
-                    <br>
-                    <button id="off topic">off topic</button>
+                    <input type = 'button' value = "#general" id="general" class = "buttn">
+                    <input type = 'button' value ="#lab" id="lab" class = "buttn" value = "lab">
+                    <input type = 'button' id="project" class = "buttn" value ="#Project">
+                    <input type = 'button' id="exam" class = "buttn"  value = "#exam">
+                    <input type = 'button' id="homework" class = "buttn" value = "#homework">
+                    <input type = 'button' id="off topic" class = "buttn" value = "#off topic">
                 </div>
-            </div>
-            <div class="mini-box">
-                <div class="upvotes">
-                    <p>Highest Upvotes</p>
-                </div>
+        </div>
+    </div>
+    <div id="content"></div>
+    <div class ="right">
+        <div class="members">
+            <div class="m-name">
+                <p>Professor Name</p>
+                <p>TA Name</p>
+                <p>UCA Name</p>
+                <p>Student Name 1</p>
+                <p>Student Name 2</p>
+                <p>Student Name 3</p>
+                <p>Student Name 4</p>
             </div>
         </div>
     </div>
-
-    <div class="right">
-        <div class="box">
-            <div class="members">
-                <div class="m-name">
-                    <p>Professor Name</p>
-                    <p>TA Name</p>
-                    <p>UCA Name</p>
-                    <p>Student Name 1</p>
-                    <p>Student Name 2</p>
-                    <p>Student Name 3</p>
-                    <p>Student Name 4</p>
-                </div>
-            </div>
-            <div class="mini-box">
-                <div class="upvotes">
-                    <p>Pinned Comments</p>
-                </div>
-            </div>
-        </div>
     </div>
-    <div id="container">
         <div id="sendMessage">
             <textarea id="messColumn" type="text"></textarea>
             <input id="comment" type="image" src="/img/icons8-email-send-30.png">
         </div>
-        <div id="content"></div>
     </div>
     <script type="module" src="message-board-scripts.js"></script>
 </body>

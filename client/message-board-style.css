@@ -13,9 +13,9 @@ div {
     font-size: 10px;
 }
 
-body {
+/* body {
     background: url(/img/stripes-light.png) repeat 0 0;
-}
+} */
 
 .btn {
     border: none;
@@ -24,14 +24,16 @@ body {
     padding: 28px;
     cursor: pointer;
     display: inline-block;
+    color:#A3A2A6;
+
 }
 
 .btn:hover {
-    background: #eee;
+    background: #26242B;
 }
 
 .top-bar {
-    background-color: skyblue;
+    background-color:#19171D;
     padding-left: 50px;
 }
 
@@ -46,49 +48,43 @@ body {
     padding: 5px;
 }
 
-.right .box {
-    width: 200px;
-    height: 50%;
-    border: 5px solid skyblue;
-    padding: 0px;
-    position: absolute;
-    right: 0;
-    margin-right: 3%;
+.main{
+    border-bottom: 1px solid #2C2A2F;
+}
+.left{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #2C2A2F;
 }
 
-.left .box {
-    width: 200px;
-    height: 50%;
-    border: 5px solid skyblue;
-    padding: 0px;
-    margin-left: 3%;
-    position: absolute;
-    left: 0;
+.left .class-names{
+    background-color: #19171D;
+    height: 100vh;
 }
-
-.left .box .mini-box {
-    width: 200px;
-    height: 150px;
-    position: relative;
-    margin-top: 110px;
-    border: 5px solid skyblue;
-    text-align: center;
-    left: 0px;
-}
-
-.right .box .mini-box {
-    width: 200px;
-    height: 150px;
-    position: relative;
-    margin-top: 95px;
-    border: 5px solid skyblue;
-    text-align: center;
-    right: 5px;
-}
-
-.left .box .class-names .c-name>p {
+.left .class-names .c-name>p {
     text-indent: 20px;
     font-size: 10px;
+}
+.right{
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+   
+    /* background-color:  #19171D; */
+}
+
+.right .members{
+    margin: 2%;
+    border-left: 1px solid #2C2A2F;
+    background-color: #19171D;
+    border-radius: 10px;
+}
+.right .members .m-name>p {
+    padding: 10px;
+    color: #A3A2A6;
+    font-family: 'Nobile', Helvetica, Arial, sans-serif;
+    font-size: 12px;
 }
 
 textarea {
@@ -98,26 +94,10 @@ textarea {
     bottom: 30px;
 }
 
-
-#container {
-    width: 30%;
-    height: 300px;
-
-}
-
 #sendMessage {
     width: 30%;
     height: 50px;
     line-height: 50px;
-}
-
-#content {
-    overflow: scroll;
-    width: 200%;
-    height: 300px;
-    border: 1px solid skyblue;
-    padding: 0px;
-    margin-left: 67%;
 }
 
 #messColumn {
@@ -136,4 +116,39 @@ textarea {
     margin-right: 23%;
     width: 150px;
     height: 100px;
+}
+input[type = 'button']{
+    width: 100%;
+    height: 50px;
+    background-color: #19171D;
+    color: #A3A2A6;
+    border: none;
+    font-family: 'Nobile', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+.buttn:hover{
+    background: #26242B;
+}
+.members{
+    background-color: #19171D;
+}
+.msg-bod{
+    display: flex;
+    width: 300px;
+    height: 80px;
+    height: 100%;
+    width: 100%;
+}
+#content{
+    width: 60%;
+    display:flex;
+    flex-direction: column;
+}
+.msg-line{
+    padding: 20px;
+    margin: 10px;
+    width: 20%;
+    background-color: #2C2A2F;
+    border-radius: 5px;
+    color:#A3A2A6;
 }
