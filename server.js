@@ -16,6 +16,7 @@ const USER_FILE = 'user_records.json'
 
 //CLASSES ORDERED BY ID 1-4 etc
 //CHANNELS ORDERED BY ID 1.1-1.6 etc
+//comment
 
 let class_records = [{ class: 'cs326', studentcount: '187', class_id: '1', professor: 'Tim Richards' },
 { class: 'cs446', studentcount: '146', class_id: '2', professor: "Tom Brady" }, { class: 'cs365', studentcount: '90', class_id: '3', professor: "Bobby Oar" },
@@ -362,6 +363,9 @@ async function reload(filename) {
     }
 }
 
-app.listen(port, () => {
-    console.log(`Server started on http://localhost:${port}`);
-});
+//app.listen(port, () => {
+//    console.log(`Server started on http://localhost:${port}`);
+//});
+
+app.listen(process.env.PORT || 3000,
+    () => console.log("Server is running..."));
