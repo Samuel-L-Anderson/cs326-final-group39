@@ -150,11 +150,6 @@ async function deleteAssignment(response, assignment_id) {
     }
 }
 
-
-app.get('/', async (request, response) => {
-    response.sendFile("/client/dashboard.html");
-});
-
 app.get('/dashboard', async (request, response) => {
     console.log("hello from server");
     const options = request.query;
