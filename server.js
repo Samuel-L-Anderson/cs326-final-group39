@@ -1,14 +1,51 @@
 import express from 'express';
 import { readFile, writeFile } from 'fs/promises';
 import logger from 'morgan';
+import mongoose from 'mongoose';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 5000;
+
+const MONGODB_URI = 'mongodb+srv://326group39:ilovecoding@cluster0.69p7f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 app.use('/client', express.static("client"));
+
+mongoose.connect(MONGODB_URI || 'mongodb://localhost/39gs', {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+});
+
+mongoose.connection.on('connected', () => {
+    console.log('connected to mongo...');
+})
+
+const Schema = mongoose.Schema; 
+const classSchema = new Schema({
+    title: String,
+    class_id: Number, 
+    professor: String,
+});
+
+//model 
+const classModel = mongoose.model('Class', classSchema);
+
+const testClass = {
+    title: 'CS326', 
+    classid: 1, 
+    professor: 'Tim Richards'
+};
+
+const newClass = new classModel(testClass);
+newClass.save((error) => {
+    if (error) {
+        console.log("error saving to database");
+    } else {
+        console.log("data saved to database");
+    }
+});
 
 const MESSAGE_FILE = 'messages.json'
 const CLASS_FILE = 'classes.json'
@@ -17,16 +54,6 @@ const USER_FILE = 'user_records.json'
 //CLASSES ORDERED BY ID 1-4 etc
 //CHANNELS ORDERED BY ID 1.1-1.6 etc
 
-let class_records = [{ class: 'cs326', studentcount: '187', class_id: '1', professor: 'Tim Richards' },
-{ class: 'cs446', studentcount: '146', class_id: '2', professor: "Tom Brady" }, { class: 'cs365', studentcount: '90', class_id: '3', professor: "Bobby Oar" },
-{ class: 'econ103', studentcount: '250', class_id: '4', professor: "Mac Jones" }];
-
-let user_records = [{ name: 'Joe', instructor: 'False', user_id: '1', inClasses: [1, 2, 3, 4] },
-{ name: 'Jeff', instructor: "False", user_id: '2', inClasses: [1, 2, 3, 4] }];
-
-let assignment_records = [{ class_id: '3', day: '20', month: '3', year: '2022', assignment_name: 'homework 5', assignment_id: '7' }];
-
-let message_records = [];
 
 async function reloadMessages() {
     try {
@@ -151,18 +178,17 @@ async function deleteAssignment(response, assignment_id) {
 
 
 app.get('/dashboard', async (request, response) => {
-    console.log("hello from server");
-    const options = request.query;
-    const user = options.user;
-    let tempUserRecords = user_records;
-    let tempClassRecords = class_records;
-    const classesArr = tempUserRecords.filter(item => item.user_id === user)[0].inClasses;
-    console.log(classesArr);
-    let userClasses = class_records;
-    console.log(userClasses);
-    response.send(userClasses);
+    classModel.find({})
+        .then((data) => {
+            console.log('Data: ', data);
+            response.send(data);
+         })
+        .catch((error) => {
+            console.log('error: ', error);
+    });
 })
 
+/*
 app.get('/dueToday', async (request, response) => {
     const options = request.query;
     const class_id = options.id;
@@ -177,6 +203,7 @@ app.get('/dueToday', async (request, response) => {
     console.log(returnVal);
     response.send(returnVal);
 });
+*/
 
 app.get('/class', async (request, response) => {
     //http://localhost:3000/class?class=cs326
