@@ -1,156 +1,139 @@
-import express from 'express';
-import logger from 'morgan';
-import { readFile, writeFile } from 'fs/promises';
-import e from 'express';
+const date_element = document.getElementById("date_today");
+const month_element = document.getElementById("month");
+
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+
+let today = new Date();
+const day = today.getDate();
+const month = today.getMonth() + 1;
+const year = today.getFullYear();
+
+const todayString = month + "/" + day + "/" + year;
+
+date_element.innerText = todayString;
+month_element.innerText = monthNames[month-1];
+
+const createButton = document.getElementById('create');
+const updateButton = document.getElementById('update');
+const deleteButton = document.getElementById('delete');
+
+const dates = document.getElementById("day_wrap")
+let daysInMonth = new Date(year, month, 0).getDate();
+
+console.log(daysInMonth);
+
+for(let i = 0; i<daysInMonth; i++)
+{
+  let dateBox = document.createElement("li");
+  dateBox.setAttribute("id", `${i + 1}`);
+  let dateText = document.createTextNode(i+1);
+  dateBox.appendChild(dateText);
+  dates.appendChild(dateBox);
+}
+
+dates.addEventListener('click', async (e) => {
+  let day_selected = e.target.id;
+  const todayString = month + "/" + day_selected + "/" + year;
+  date_element.innerText = todayString;
+
+  let assignmentData = await readDate(month, day_selected, year);
+
+  assignmentData.forEach(element=> {
+    const assignmentWrapper = document.getElementById("assignment-wrapper");
+    $('#assignment-wrapper div').empty();
+    
+    const assignmentList = document.getElementById("assignments-ul");
+    let assignmentName = element[nameData];
+
+    let cell = document.createElement('li');
+    let text = document.createTextNode(assignmentName);
+    cell.appendChild(text);
+    assignmentList.appendChild(cell);
+
+   assignmentWrapper.appendChild(assignmentList);
+  });
+});
 
 let assignments = [];
 
-const assignmentFiles = 'assignment.json';
+createButton.addEventListener('click', async (e) => {
+    const name = window.prompt("Assignment name");
+    const user_month = window.prompt("Assignment Month (#)");
+    const user_day = window.prompt("Assignment Day");
+    const user_assignment_id = window.prompt("Assignment ID");
+    const user_class_id = window.prompt("Class ID");
 
-async function reloadAssignments(filename) {
-  try {
-    const data = await readFile(filename, { encoding: 'utf8' });
-    assignments = JSON.parse(data);
-  } catch (err) {
-    assignments = [];
+    const json = await createAssignment(user_month, user_day, year, name, user_assignment_id, user_class_id);
+    alert(`Assignment ${assignment_id} created`);
+  });
+
+  updateButton.addEventListener('click', async (e) => {
+    const name = window.prompt("Assignment name");
+    const user_month = window.prompt("Assignment Month (#)");
+    const user_day = window.prompt("Assignment Day");
+    const user_assignment_id = window.prompt("Assignment ID");
+    const user_class_id = window.prompt("Class ID");
+
+    const json = await updateAssignment(user_month, user_day, year, name, user_assignment_id, user_class_id);
+    alert(`Assignment ${assignment_id} updated`);
+  });
+
+
+
+  deleteButton.addEventListener('click', async (e) => {
+    const user_assignment_id = window.prompt("Assignment ID to delete");
+    const json = await deleteAssignment(user_assignment_id);
+    alert(`Assignment ${user_assignment_id} deleted`);
+  });
+
+
+export async function createAssignment(month, day, year, name, assignment_id, class_id) {
+    const response = await fetch(`/createAssignment?month=${month}&day=${day}}&year=${year}
+                                    &assignment_id=${assignment_id}&class_id=${class_id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({month:month, day: day, year: year, name: name, assignment_id: assignment_id, class_id: class_id})
+    });
+    const data = await response.json();
+    return data;
   }
-}
-
-async function saveAssignments() {
-  try {
-    const data = JSON.stringify(assignments);
-    await writeFile(assignmentFiles, data, { encoding: 'utf8' });
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function assignmentExists(assignment_id){
-  if (assignments.filter(x => x['assignment_id'] === assignment_id).length > 0) {
-  }
-}
-
-function getAssignmentIndex(assignment_id){
-  const index = assignments.map(object => object['assignment_id']).indexOf(assignment_id);
-  return index;
-}
-
-
-async function createAssignment(response, month, day, year, name, assignment_id, class_id) {
-  if (assignment_id === undefined) {
-    // 400 - Bad Request
-    response.status(404).json({ error: `Assignment could not be created` });
-    } 
-  else {
-    await reloadAssignments(assignmentFiles);
-    let newAssignment = {"month":month, 
-                        "day": day, 
-                        "year": year, 
-                        "name": name, 
-                        "assignment_id": assignment_id,
-                        "class_id": class_id};
-    assignments.push(newAssignment);
-    await saveAssignments();
-    response.json({month:month, day: day, year: year, name: name, assignment_id: assignment_id, class_id: class_id});
-  }
-}
-
-async function readDate(response, month, day, year) {
-  await reloadAssignments(assignmentFiles);
-  let assignmentDates = [];
-  if (!(month === undefined || day === undefined || year === undefined)) {
-    for( let i = 0; i < assignments.length; i++)
-    {
-      assignmentDates = assignments.filter(x => x['day'] === day && 
-                                                x['month'] === month && 
-                                                x['year'] === year);
+  
+  export async function readDate(month, day, year) {
+    try {
+      const response = await fetch(`/readDate?month=${month}&day=${day}}&year=${year}`, {
+        method: 'GET',
+      });
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      console.log(err);
     }
-    response.json({ day:day, month: month, year:year, assignments: assignmentDates });
-  } else {
-    // 404 - Not Found
-    response.json({ error: `No Assignments on '${month}' ${day}, ${year}` });
   }
-}
-
-async function updateAssignment(response, month, day, year, name, assignment_id, class_id) {
-  await reloadAssignments(assignmentFiles);
-  if (assignmentExists(assignment_id)) {
-    const index = getAssignmentIndex(assignment_id);
-    assignments[index] = {"month":month, 
-                          "day": day, 
-                          "year": year, 
-                          "name": name, 
-                          "assignment_id": assignment_id, 
-                          "class_id": class_id };
-    await saveAssignments();
-    response.json({month:month, day: day, year: year, name: name, assignment_id: assignment_id, class_id: class_id});
-  } else {
-    // 404 - Not Found
-    response.status(404).json({ error: `Assignment '${name}' Not Found` });
+  
+  export async function updateAssignment(month, day, year, name, assignment_id, class_id) {
+    const response = await fetch(`/updateAssignment?month=${month}&day=${day}}&year=${year}
+    &assignment_id=${assignment_id}&class_id=${class_id}`, {
+      method: 'PUT',
+      body: JSON.stringify({month:month, day: day, year: year, name: name, assignment_id: assignment_id, class_id: class_id}),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    return data;
   }
-}
-
-async function deleteAssignment(response, assignment_id) {
-  await reloadAssignments(assignmentFiles);
-  if (assignmentExists(assignment_id)) {
-    const index = getAssignmentIndex(assignment_id);
-    assignments.splice(index, 1);
-    await saveAssignments();
-    response.json({ id:assignment_id });
-  } else {
-    // 404 - Not Found
-    response.status(404).json({ error: `Assignment '${assignment_id}' Not Found` });
+  
+  export async function deleteAssignment(assignment_id) {
+    const response = await fetch(`/deleteAssignment?assignment_id=${assignment_id}`, {
+      method: 'DELETE',
+      body: JSON.stringify({ assignment_id:assignment_id }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    return data;
   }
-}
-
-
-const app = express();
-const port = 3000;
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use('/client', express.static('client'));
-
-app.post('/createAssignment', async (request, response) => {
-  const details = request.query;
-  createAssignment(response, 
-                  parseInt(details.month), 
-                  parseInt(details.day), 
-                  parseInt(details.year), 
-                  details.name, 
-                  parseInt(details.assignment_id),
-                  parseInt(details.class_id));
-});
-
-app.get('/readDate', async (request, response) => {
-  const details = request.query;
-  readDate(response, 
-          parseInt(details.month), 
-          parseInt(details.day), 
-          parseInt(details.year));
-        });
-
-app.put('/updateAssignment', async (request, response) => {
-  const details = request.query;
-  updateAssignment(response, 
-                  parseInt(details.month), 
-                  parseInt(details.day), 
-                  parseInt(details.year), 
-                  details.name, 
-                  parseInt(details.assignment_id),
-                  parseInt(details.class_id));
-});
-
-app.delete('/deleteAssignment', async (request, response) => {
-  const details = request.query;
-  deleteAssignment(response, parseInt(details.assignment_id));
-});
-
-app.get('*', async (request, response) => {
-  response.status(404).send(`Not found: ${request.path}`);
-});
-
-// NEW
-app.listen(port, () => {
-  console.log(`Server started on poart ${port}`);
-});
