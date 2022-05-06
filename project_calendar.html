@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="project_calendar.css" />
+    <link rel="stylesheet" href="project.css" />
+    <script type="module" src="calendar.js" defer></script>
   </head>
   <body>
       <div class='calendar'>
         <div class='date'>
           <div class="time">
-            <h2>MARCH</h2>
+            <h2 id="month"></h2>
           </div>
           <div class='week'>
             <ul>
@@ -20,54 +21,25 @@
               <li>Sat</li>
             </ul>
           </div>
-          <div class="days">
-            <ul>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-              <li>5</li>
-              <li>6</li>
-              <li>7</li>
-              <li>8</li>
-              <li>9</li>
-              <li>10</li>
-              <li>11</li>
-              <li>12</li>
-              <li>13</li>
-              <li>14</li>
-              <li>15</li>
-              <li>16</li>
-              <li>17</li>
-              <li>18</li>
-              <li>19</li>
-              <li>20</li>
-              <li>21</li>
-              <li>22</li>
-              <li>23</li>
-              <li>24</li>
-              <li>25</li>
-              <li>26</li>
-              <li>27</li>
-              <li>28</li>
-              <li>29</li>
-              <li>30</li>
-              <li>31</li>
+          <div class="days" id = "days">
+            <ul id="day_wrap">
             </ul>
           </div>
-          <div class="todays-date">
-            Saturday, March 26, 2022
-            <div class="title">
+          <div class="todays-date" id="date_today">
+            <div id ="assignment-wrapper" class="title">
               Assignments:
-              <ul>
-                <li>Milestone 1</li>
-                <li>Homework 5</li>
-                <li>Project Meeting</li>
+              <ul id="assignments-ul">
               </ul>
             </div>
           </div>
+          <input type="button" value="Create Assignment" id="create" />
+          <br>
+          <input type="button" value="Update Assignment" id="update" />
+          <br>
+          <input type="button" value="Delete Assignment" id="delete" />
         </div>
       </div>
+      <br>
 
   </body>
 </html>
