@@ -1,10 +1,6 @@
-/*
-For this milestone user ID will be hardcoded, once the database is running then the
-user ID will be pulled from the user that is logged in 
-*/
-export async function fetchDashboard(user) {
+export async function fetchDashboard() {
     try {
-    const response = await fetch(`/dashboard?user=${user}`, {
+    const response = await fetch(`/dashboard`, {
         method: 'GET'
     });
     const data = await response.json();
@@ -14,14 +10,14 @@ export async function fetchDashboard(user) {
     }
 }
 
-export async function dueToday(clas) {
-    try {
-    const response =  await fetch(`/dueToday?clas=${clas}`, {
-        method: 'GET'
-    });
-    const data = await response.json(); 
-    return data; 
-    } catch(err) {
+export async function fetchUpcomingAssignments() {
+    try { 
+        const response = await fetch(`/upcomingAssignments?user_id=${userID}`, {
+            method: 'GET'
+        });
+        const data = await response.json();
+        return data;
+    } catch (err) {
         console.log(err);
     }
 }

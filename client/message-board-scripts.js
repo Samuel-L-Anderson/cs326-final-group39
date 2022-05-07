@@ -1,5 +1,8 @@
-import * as message_crud from './message_crud.js'
 
+
+
+import * as message_crud from './message_crud.js'
+ 
 var messCol = document.getElementById("messColumn");
 var btn = document.getElementById("comment");
 var con = document.getElementById("content");
@@ -11,45 +14,27 @@ var homework = document.getElementById('homework');
 var off_topic = document.getElementById('off topic')
 var curChannel = document.getElementById('curChannel');
 var curClass = document.getElementById('curDiscussionBoard');
-var class_1_btn = document.getElementById('class-1');
-var class_2_btn = document.getElementById('class-2');
-var class_3_btn = document.getElementById('class-3');
-var class_4_btn = document.getElementById('class-4');
-
-
-
-// async function renderClasses(user) {
-//     let filteredUser = await message_crud.getUser(user)
-//     let class_records = await message_crud.getClasses();
-//     let class_id_1 = class_records.filter(item => {
-//         return item.class_id.indexOf(filteredUser[0].inClasses[0]) !== -1;
-//     });
-//     let class_id_2 = class_records.filter(item => {
-//         return item.class_id.indexOf(filteredUser[0].inClasses[1]) !== -1;
-//     });
-//     let class_id_3 = class_records.filter(item => {
-//         return item.class_id.indexOf(filteredUser[0].inClasses[2]) !== -1;
-//     });
-//     let class_id_4 = class_records.filter(item => {
-//         return item.class_id.indexOf(filteredUser[0].inClasses[3]) !== -1;
-//     });
-//     class_1_btn.innerHTML = class_id_1[0].class;
-//     class_2_btn.innerHTML = class_id_2[0].class;
-//     class_3_btn.innerHTML = class_id_3[0].class;
-//     class_4_btn.innerHTML = class_id_4[0].class;
-// }
-
-// renderClasses(1);
-
-
-//FAKE CURRENTLY UNTIL ALL CLASSES ADDED TO DB
-const class_mapping = {
-    'cs326': 1,
-    'cs446': 2,
-    'cs365': 3,
-    'econ103': 4
+var u = document.getElementById('m-name');
+var home = document.getElementById('home');
+ 
+ 
+curClass.innerHTML = sessionStorage.getItem('class_name');
+ 
+home.addEventListener('click', async (e) => {
+    window.location = '/client/dashboard.html';
+});
+ 
+async function generateClassMapping() {
+    const j = await message_crud.getClasses();
+    let mapping = {};
+    for (const item of j) {
+        mapping[item.title] = item.class_id;
+    }
+    return mapping;
 }
-
+ 
+const class_mapping = await generateClassMapping();
+ 
 const channel_mapping = {
     'general': 0.1,
     'lab': 0.2,
@@ -58,34 +43,34 @@ const channel_mapping = {
     'homework': 0.5,
     'off topic': 0.6
 }
-
+ 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
 }
-
-class_1_btn.addEventListener('click', function () {
-    curClass.innerHTML = class_1_btn.innerHTML;
-    removeAllChildNodes(con);
-});
-
-class_2_btn.addEventListener('click', function () {
-    curClass.innerHTML = class_2_btn.innerHTML;
-    removeAllChildNodes(con);
-});
-
-class_3_btn.addEventListener('click', function () {
-    curClass.innerHTML = class_3_btn.innerHTML;
-    removeAllChildNodes(con);
-});
-
-class_4_btn.addEventListener('click', function () {
-    curClass.innerHTML = class_4_btn.innerHTML;
-    removeAllChildNodes(con);
-});
-
-
+ 
+async function renderMembers(classID) {
+    const j = await message_crud.getClassUsers(classID);
+    let mem = [];
+    for (const item of j) {
+        mem.push(item.name);
+    }
+    return mem;
+}
+ 
+const memberArray = await renderMembers(1);
+ 
+function buildUsers() {
+    for (const item of memberArray) {
+        var userDiv = document.createElement('div');
+        userDiv.innerHTML = item;
+        u.appendChild(userDiv);
+    }
+}
+ 
+buildUsers();
+ 
 general.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'general';
@@ -100,11 +85,11 @@ general.addEventListener('click', async (e) => {
         // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item;
+        messCon.innerHTML = item.message;
         con.appendChild(messDiv);
     }
 });
-
+ 
 lab.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'lab';
@@ -119,11 +104,11 @@ lab.addEventListener('click', async (e) => {
         // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item;
+        messCon.innerHTML = item.message;
         con.appendChild(messDiv);
     }
 });
-
+ 
 project.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'project';
@@ -138,11 +123,11 @@ project.addEventListener('click', async (e) => {
         // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item;
+        messCon.innerHTML = item.message;
         con.appendChild(messDiv);
     }
 });
-
+ 
 exam.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'exam';
@@ -157,11 +142,11 @@ exam.addEventListener('click', async (e) => {
         // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item;
+        messCon.innerHTML = item.message;
         con.appendChild(messDiv);
     }
 });
-
+ 
 homework.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'homework';
@@ -176,11 +161,11 @@ homework.addEventListener('click', async (e) => {
         // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item;
+        messCon.innerHTML = item.message;
         con.appendChild(messDiv);
     }
 });
-
+ 
 off_topic.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'off topic';
@@ -195,24 +180,42 @@ off_topic.addEventListener('click', async (e) => {
         // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item;
+        messCon.innerHTML = item.message;
         con.appendChild(messDiv);
     }
 });
-
+ 
 btn.addEventListener('click', async (e) => {
     var messDiv = document.createElement("div");
     messDiv.classList.add("msg-line");
     // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
     var messCon = document.createElement("div");
     // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
+    const data = await message_crud.getUser(parseInt(sessionStorage.getItem('userId')));
+    const user_name = data.name
     messCon.classList.add("msg");
     messDiv.appendChild(messCon);
-    messCon.innerHTML = messCol.value;
+    messCon.innerHTML = user_name + ": " + messCol.value;
     con.appendChild(messDiv);
-    const fake_user_ID = 1;
+    const user_id = sessionStorage.getItem('userId');
     const cur_class = class_mapping[curClass.innerHTML];
     const cur_channel = channel_mapping[curChannel.innerHTML];
-    const json = await message_crud.postMessage(messCol.value, fake_user_ID, (cur_class + cur_channel));
+    const json = await message_crud.postMessage(messCol.value, user_id, (cur_class + cur_channel));
     messCol.value = "";
 });
+ 
+ 
+/*
+//spin every five seconds and pull any new messages
+const d = new Date();
+let startTime = d.getTime();
+while (true) {
+    if (d.getTime() - startTime > 5) {
+        //pull new messages here
+ 
+        //update startTime
+        startTime = d.getTime();
+    }
+}
+*/
+

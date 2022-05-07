@@ -11,75 +11,42 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       
-        <button type="button" class="btn btn-outline-dark">39Gs</button>
+        <button type="button" class="btn btn-outline-dark" id="home">HOME</button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto ">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Dashboard</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Class Discussion
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Class One</a>
-                <a class="dropdown-item" href="#">Class Two</a>
-              </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Calendar</a>
-            </li>
+            
           </ul>
           <form class="form-inline my-2 my-lg-0">
-            <button type="submit">Profile</button>
+            <button type="submit">Logout</button>
           </form>
         </div>
       </nav>
-
-      <!-- This will be done dybamically once we are pulling data from the backend and will therefore
-       probably have to be done with Javascript-->
-       <div class="card-deck mx-auto mt-5">
-            <div id='class1' class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-                <div id = 'class1_name' class="card-header"></div>
-                <div class="card-body"></div>
-                <h5 id='class1_professor' class="card-title ml-2">Professor: ProfessorName</h5>
-                <h5 id='class1_dueToday' class="card-title ml-2">Due Today: </h5>
-                <h5 id='class1_calendar' class="card-title ml-2">Class Calendar</h5>
-                <h5 id='class1_chat' class="card-title ml-2">Chat</h5>
-            </div>
-
-            <div id='class2' class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-              <div id = 'class2_name' class="card-header"></div>
-              <div class="card-body"></div>
-              <h5 id='class2_professor' class="card-title ml-2">Professor: ProfessorName</h5>
-              <h5 id='class2_dueToday' class="card-title ml-2">Due Today: </h5>
-              <h5 id='class2_calendar' class="card-title ml-2">Class Calendar</h5>
-              <h5 id='class2_chat' class="card-title ml-2">Chat</h5>
-           </div>
-
-           <div id='class3' class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-            <div id = 'class3_name' class="card-header"></div>
-            <div class="card-body"></div>
-            <h5 id='class3_professor' class="card-title ml-2">Professor: ProfessorName</h5>
-            <h5 id='class3_dueToday' class="card-title ml-2">Due Today: </h5>
-            <h5 id='class3_calendar' class="card-title ml-2">Class Calendar</h5>
-            <h5 id='class3_chat' class="card-title ml-2">Chat</h5>
-         </div>
-
-         <div id='class4' class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-          <div id = 'class4_name' class="card-header"></div>
-          <div class="card-body"></div>
-          <h5 id='class4_professor' class="card-title ml-2">Professor: ProfessorName</h5>
-          <h5 id='class4_dueToday' class="card-title ml-2">Due Today: </h5>
-          <h5 id='class4_calendar' class="card-title ml-2">Class Calendar</h5>
-          <h5 id='class4_chat' class="card-title ml-2">Chat</h5>
-       </div>
+      <h1 style="text-align: center; border: solid; padding: 2%; margin: auto;">-COURSIFY UMASS-</h1>
+       <div class="col d-flex justify-content-center">
          
+
+       <div id = dashDeck class="card-deck mx-auto mt-5"> </div>
+
+       </div>    
+
+       <h3 style="text-align: center; margin: auto;">Upcoming Assignments</h3>
+       <div class = "col d-flex justify-content-center">
+        <div id = "calprev" class = "container" style="padding: 2%;">
+          <!--Upcoming assignments dynamically rendered here-->
+          <div class="row">
+            <div class="col" style="text-align: center; background-color: grey; border: solid;">
+              Class
+            </div>
+            <div class="col-6" style=" text-align: center; background-color: grey; border: solid;">
+              Assignment Name
+            </div>
+            <div class="col" style=" text-align: center; background-color: grey; border: solid;">
+              Due Date
+            </div>
+          </div>
+        </div>
        </div>
-    
+
   </body>
 </html>
