@@ -5,10 +5,10 @@
 ### Documents
 
 * assignments document {  
-    > name: String,  
-    > assignment_id: Number,  
-    > date: String,  
-    > class_id: Number  
+    &emsp; name: String,  
+    &emsp; assignment_id: Number,  
+    &emsp; date: String,  
+    &emsp; class_id: Number  
 }  
 
 * messages document {  
