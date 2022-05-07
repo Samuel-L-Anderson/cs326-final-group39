@@ -1,85 +1,39 @@
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module" src="dashboard_client.js"></script>
-    <title>Initial Dahsboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      
-        <button type="button" class="btn btn-outline-dark">39Gs</button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto ">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Dashboard</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Class Discussion
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Class One</a>
-                <a class="dropdown-item" href="#">Class Two</a>
-              </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Calendar</a>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <button type="submit">Profile</button>
-          </form>
-        </div>
-      </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="module" src="dashboard_client.js"></script>
+  <title>Initial Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-      <!-- This will be done dybamically once we are pulling data from the backend and will therefore
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <button type="button" class="btn btn-outline-dark">HOME</button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto ">
+
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button type="submit">Logout</button>
+      </form>
+    </div>
+  </nav>
+
+  <!-- This will be done dybamically once we are pulling data from the backend and will therefore
        probably have to be done with Javascript-->
-       <div class="card-deck mx-auto mt-5">
-            <div id='class1' class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-                <div id = 'class1_name' class="card-header"></div>
-                <div class="card-body"></div>
-                <h5 id='class1_professor' class="card-title ml-2">Professor: ProfessorName</h5>
-                <h5 id='class1_dueToday' class="card-title ml-2">Due Today: </h5>
-                <h5 id='class1_calendar' class="card-title ml-2">Class Calendar</h5>
-                <h5 id='class1_chat' class="card-title ml-2">Chat</h5>
-            </div>
+  <div class="col d-flex justify-content-center">
 
-            <div id='class2' class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-              <div id = 'class2_name' class="card-header"></div>
-              <div class="card-body"></div>
-              <h5 id='class2_professor' class="card-title ml-2">Professor: ProfessorName</h5>
-              <h5 id='class2_dueToday' class="card-title ml-2">Due Today: </h5>
-              <h5 id='class2_calendar' class="card-title ml-2">Class Calendar</h5>
-              <h5 id='class2_chat' class="card-title ml-2">Chat</h5>
-           </div>
+    <div id=dashDeck class="card-deck mx-auto mt-5"> </div>
 
-           <div id='class3' class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-            <div id = 'class3_name' class="card-header"></div>
-            <div class="card-body"></div>
-            <h5 id='class3_professor' class="card-title ml-2">Professor: ProfessorName</h5>
-            <h5 id='class3_dueToday' class="card-title ml-2">Due Today: </h5>
-            <h5 id='class3_calendar' class="card-title ml-2">Class Calendar</h5>
-            <h5 id='class3_chat' class="card-title ml-2">Chat</h5>
-         </div>
+  </div>
 
-         <div id='class4' class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-          <div id = 'class4_name' class="card-header"></div>
-          <div class="card-body"></div>
-          <h5 id='class4_professor' class="card-title ml-2">Professor: ProfessorName</h5>
-          <h5 id='class4_dueToday' class="card-title ml-2">Due Today: </h5>
-          <h5 id='class4_calendar' class="card-title ml-2">Class Calendar</h5>
-          <h5 id='class4_chat' class="card-title ml-2">Chat</h5>
-       </div>
-         
-       </div>
-    
-  </body>
+</body>
+
 </html>

@@ -41,3 +41,15 @@ export async function getClasses() {
         console.log(err);
     }
 }
+
+export async function getClassUsers(classID) {
+    try {
+        const response = await fetch(`/class/user?class_id=${classID}`, {
+            method: 'GET'
+        });
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.log(err);
+    }
+}
