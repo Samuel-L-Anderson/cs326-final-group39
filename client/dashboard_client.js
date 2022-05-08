@@ -3,12 +3,10 @@ import * as crud from './dashboard_crud.js';
 
 //getting current userId
 const userId = sessionStorage.getItem("userId");
-
-
-//load in classIds for user 
-const spireUserData = await crud.fetchClassIds(32303431);
+const id  = await crud.spireID(1234);
+console.log(id);
+const spireUserData = await crud.fetchClassIds(id);
 const classIdArr = spireUserData.class_ids;
-
 
 //load in class data from database
 const classesData = [];
@@ -18,10 +16,10 @@ for (let i = 0; i < classIdArr.length; i++) {
 }
 const numClasses = classesData.length;
 
-
+console.log(classesData);
 
 //load in upcoming assignments from database 
-const upcoming = await crud.fetchUpcomingAssignments(32303431);
+const upcoming = await crud.fetchUpcomingAssignments(id);
 
 
 //establish card deck as element for appening to 
@@ -67,10 +65,10 @@ for (let i = 0; i < numClasses; i++) {
     const id = "chat" + (i+1);
     const chatBut = document.getElementById(id);
     chatBut.addEventListener('click', async(e) => {
-        window.location = "/client/message-board.html";
+        window.location = "/message-board";
         sessionStorage.setItem("class_name", classesData[i].title);
         sessionStorage.setItem("classId", classesData[i].class_id);
-        sessionStorage.setItem("userId", 32303431);
+        sessionStorage.setItem("userId", id);
     });
 }
 
@@ -95,7 +93,7 @@ for (let i = upcoming.length - 1; i  >= 0; i--) {
 //Navar redirect 
 const homebut = document.getElementById("home");
 homebut.addEventListener('click', async(e) => {
-    window.location = "/client/dashboard.html";
+    window.location = "/dashboard";
 });
 
 //logoutredirect
@@ -104,12 +102,12 @@ logoutBut.addEventListener('click', async(e) => {
     sessionStorage.removeItem("userId");
     sessionStorage.removeItem("class_name");
     sessionStorage.removeItem("classId");
-    window.location = "/client/Login/login.html";
+    window.location = "/login";
 }); 
 
 //Cal redirect 
 const calBut = document.getElementById("calLink");
 calBut.addEventListener('click', async(e) => {
     sessionStorage.setItem("userId", userId);
-    window.location = "/client/project_calendar.html";
+    window.location = "/calendar";
 });

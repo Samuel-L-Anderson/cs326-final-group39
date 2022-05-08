@@ -6,7 +6,7 @@
 
 * assignments document {  
     &emsp; name: String,  
-    &emsp; user_id: Number,  
+    &emsp; assignment_id: Number,  
     &emsp; date: String,  
     &emsp; class_id: Number  
 }  

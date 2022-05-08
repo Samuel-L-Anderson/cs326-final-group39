@@ -1,6 +1,6 @@
 export async function fetchClass(classId) {
     try {
-    const response = await fetch(`/dashboard?class_id=${classId}`, {
+    const response = await fetch(`/dashboards?class_id=${classId}`, {
         method: 'GET'
     });
     const data = await response.json();
@@ -9,6 +9,18 @@ export async function fetchClass(classId) {
         console.log(err);
     }
 }
+export async function spireID(userId) {
+    try { 
+        const response = await fetch(`/spireID?user_id=${userId}`, {
+            method: 'GET'
+        });
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 
 export async function fetchUpcomingAssignments(userId) {
     try { 
@@ -29,8 +41,11 @@ export async function fetchClassIds(userId) {
             method: 'GET'
         });
         const data = await response.json();
+        console.log("here");
+        console.log(data);
         return data;
     } catch (err) {
+        console.log("here");
         console.log(err);
     }
 }
