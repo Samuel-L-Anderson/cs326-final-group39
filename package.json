@@ -1,0 +1,22 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "Express application",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.3.1",
+    "morgan": "^1.10.0"
+  },
+  "engines": {
+    "node": "16.14.0"
+  }
+}
