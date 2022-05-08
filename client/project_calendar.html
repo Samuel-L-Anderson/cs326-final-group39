@@ -1,82 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="project_calendar.css" />
-    <script type="module" src="calendar.js" defer></script>
-  </head>
-  <body>
-      <div class='calendar'>
-        <div class='date'>
-          <div class="time">
-            <h2 id="month"></h2>
+ <head>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   <script type="module" src="calendar.js" defer></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+ </head>
+ <body>
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+     <button id = "home" type="button" class="btn btn-outline-dark">HOME</button>
+     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+       <ul class="navbar-nav mr-auto ">
+       </ul>
+       <form class="form-inline my-2 my-lg-0">
+         <button type="button" id="logout">Logout</button>
+       </form>
+     </div>
+   </nav>
+
+   <h4 style="text-align: center; border:solid; margin: auto; padding: 0%;" id = "curMonth"></h4>
+   <div class="col d-flex justify-content-center" style="padding:2%; border-radius: 2%;">
+    <input type="button" value="Previous Month" id="prev" style="border-radius: 1%;"/>
+    <br>
+    <input type="button" value="Next Month" id="next" style="border-radius: 1%;" />
+    <br>
+   </div>
+   <div class="col d-flex justify-content-center">
+    <div id="cal" class="container" style="padding: 1%; border: solid; border-radius: 2%; background-color: gray;">
+      <div class="row calendar-week-header">
+        <div class="col" style="padding: 2%; border:solid; text-align: center;">S</div>
+        <div class="col"style="padding: 2%; border:solid; text-align: center;">M</div>
+        <div class="col"style="padding: 2%; border:solid; text-align: center;">T</div>
+        <div class="col"style="padding: 2%; border:solid; text-align: center;">W</div>
+        <div class="col"style="padding: 2%; border:solid; text-align: center;">T</div>
+        <div class="col"style="padding: 2%; border:solid; text-align: center;">F</div>
+        <div class="col" style="padding: 2%; border:solid; text-align: center;">S</div>
+      </div>
+      <div class="row calendar-week-header">
+        <div id="1" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="2" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="3" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="4" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="5" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="6" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="7" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+      </div>
+      <div class="row calendar-week-header">
+        <div id="8" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="9" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="10" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="11" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="12" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="13" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="14" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+      </div>
+      <div class="row calendar-week-header">
+        <div id="15" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="16" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="17" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="18" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="19" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="20" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="21" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+      </div>
+
+
+      <div class="row calendar-week-header">
+        <div id="22" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="23" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="24" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="25" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="26" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="27" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="28" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+      </div>
+      <div class="row calendar-week-header">
+        <div id="29" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="30" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="31" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="32" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="33" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="34" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="35" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+      </div>
+      <div class="row calendar-week-header">
+        <div id="36" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="37" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="38" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="39" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="40" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="41" class="col"style="padding: 2%; border:solid; text-align: center;"></div>
+        <div id="42" class="col" style="padding: 2%; border:solid; text-align: center;"></div>
+      </div>
+    </div>
+   </div>
+
+    <div class = "col d-flex justify-content-center">
+      <div id = "calprev" class = "container" style="padding: 2%;">
+        <!--Selected assignments dynamically rendered here-->
+        <div class="row">
+          <div class="col" style="text-align: center; background-color: grey; border: solid;">
+            Class ID
           </div>
-          <div class='week'>
-            <ul>
-              <li>Sun</li>
-              <li>Mon</li>
-              <li>Tue</li>
-              <li>Wed</li>
-              <li>Thu</li>
-              <li>Fri</li>
-              <li>Sat</li>
-            </ul>
+          <div class="col-6" style=" text-align: center; background-color: grey; border: solid;">
+            Assignment Name
           </div>
-          <div class="days" id = "days">
-            <ul id="day_wrap">
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>4</li>
-              <li>5</li>
-              <li>6</li>
-              <li>7</li>
-              <li>8</li>
-              <li>9</li>
-              <li>10</li>
-              <li>11</li>
-              <li>12</li>
-              <li>13</li>
-              <li>14</li>
-              <li>15</li>
-              <li>16</li>
-              <li>17</li>
-              <li>18</li>
-              <li>19</li>
-              <li>20</li>
-              <li>21</li>
-              <li>22</li>
-              <li>23</li>
-              <li>24</li>
-              <li>25</li>
-              <li>26</li>
-              <li>27</li>
-              <li>28</li>
-              <li>29</li>
-              <li>30</li>
-            </ul>
+          <div class="col" style=" text-align: center; background-color: grey; border: solid;">
+            Due Date
           </div>
-          <div class="todays-date" id="date_today">
-            <div class="title">
-              Assignments:
-              <ul id="assignments-ul">
-                <li>Milestone 1</li>
-                <li>Homework 5</li>
-                <li>Project Meeting</li>
-              </ul>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col" id="displayClass" style="text-align: center; border: solid;">
+            
+          </div>
+          <div class="col-6" id="displayName" style=" text-align: center; border: solid;">
+            
+          </div>
+          <div class="col" id="displayDate" style=" text-align: center; border: solid;">
+            
           </div>
         </div>
       </div>
-      <input type="button" value="Create Assignment" id="create" />
-      <br>
-      <input type="button" value="Update Assignment" id="update" />
-      <br>
-      <input type="button" value="Delete Assignment" id="delete" />
-      <br>
 
-  </body>
+     </div>
+
+ 
+ </body>
 </html>
