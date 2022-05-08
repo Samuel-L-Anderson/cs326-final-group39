@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Discussion Page</title>
+    <link rel="stylesheet" href="message-board-style.css">
+    <link href="http://fonts.googleapis.com/css?family=Corben:bold" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Nobile" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+ 
+<body style="background-color: #1B1D21;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+ 
+        <button type="button" class="btn btn-outline-dark" id="home">HOME</button>
+ 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto ">
+ 
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button type="button" id="logout">Logout</button>
+            </form>
+        </div>
+    </nav>
+    <div class="msg-bod">
+        <div class="left">
+            <div class="class-names">
+                <div class="c-name">
+                    <input type='button' value="#general" id="general" class="buttn">
+                    <input type='button' value="#lab" id="lab" class="buttn" value="lab">
+                    <input type='button' id="project" class="buttn" value="#Project">
+                    <input type='button' id="exam" class="buttn" value="#exam">
+                    <input type='button' id="homework" class="buttn" value="#homework">
+                    <input type='button' id="off topic" class="buttn" value="#off topic">
+                </div>
+            </div>
+        </div>
+        <div class="class-body">
+            <div class="main" style="background-color: #212529;">
+                <div id="curDiscussionBoard"></div>
+                <div id="curChannel"></div>
+            </div>
+            <div class="message-body">
+                <div class="written">
+                    <div id="content"></div>
+                    <div id="sendMessage" class="sendMessage">
+                        <textarea id="messColumn" type="text"></textarea>
+                        <input id="comment" type="image" src="./img/icons8-email-send-30.png">
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="members">
+                        <div id="m-name">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="module" src="message-board-scripts.js"></script>
+</body>
+ 
+</html>
+
