@@ -4,22 +4,15 @@
    a. Node
    b. NPM
    c. Express
+   d. mongoose
    
- 2. Start server within project directory using node
-node server.js 
+ 2. Launch application through heroku link
 
-This will run the server on the local 3000 port as specified in the server file. From here you should navigate to the login page:
+This will navigate you to the login page where you can either login or register
 
-http://localhost:3000/client/login/login.html
+3. In order to properly register as a user, utilize one of the following spire_ids: 13736268, 19644578,
+42605236 
 
-At the current moment, we do not have redirects therefore it is necessary to navigate manually between pages. The urls for the main pages are as follows: 
+4. From there, you can properly login with whatever password you have given. Our program assumes all spire users at umass are already within our databse, thus allowing easy registration. 
 
-Dashboard Link: http://localhost:3000/client/dashboard.html
-
-Contains overview of class information and any assignments due that day. Will eventually redirect to chat and calendar. 
-
-Calendar Link: http://localhost:3000/client/project_calendar.html
-
-Contains Calendar of classes/users
-
-Message Link: http://localhost:3000/client/message-board.html
+5. If passwords are forgetten when testing, please login with spire id: 32303431 and password: william
