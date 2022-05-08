@@ -1,6 +1,3 @@
-
-
-
 import * as message_crud from './message_crud.js'
  
 var messCol = document.getElementById("messColumn");
@@ -16,9 +13,11 @@ var curChannel = document.getElementById('curChannel');
 var curClass = document.getElementById('curDiscussionBoard');
 var u = document.getElementById('m-name');
 var home = document.getElementById('home');
- 
+var out = document.getElementById('logout');
  
 curClass.innerHTML = sessionStorage.getItem('class_name');
+curClass.style.color = 'white';
+ 
  
 home.addEventListener('click', async (e) => {
     window.location = '/client/dashboard.html';
@@ -59,9 +58,10 @@ async function renderMembers(classID) {
     return mem;
 }
  
-const memberArray = await renderMembers(1);
+const memberArray = await renderMembers(sessionStorage.getItem('classId'));
  
 function buildUsers() {
+    removeAllChildNodes(u);
     for (const item of memberArray) {
         var userDiv = document.createElement('div');
         userDiv.innerHTML = item;
@@ -71,6 +71,26 @@ function buildUsers() {
  
 buildUsers();
  
+async function renderInitialMessages() {
+    removeAllChildNodes(con);
+    curChannel.innerHTML = 'general';
+    const cur_class = class_mapping[curClass.innerHTML];
+    const num = cur_class + channel_mapping['general'];
+    const json = await message_crud.getMessages(num);
+    for (const item of json) {
+        var messDiv = document.createElement('div');
+        messDiv.classList.add("msg-line");
+        var messCon = document.createElement("div");
+        messCon.classList.add("msg");
+        messDiv.appendChild(messCon);
+        messCon.innerHTML = item.user[0].name + ": " + item.message;
+        con.appendChild(messDiv);
+    }
+}
+ 
+await renderInitialMessages();
+ 
+ 
 general.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'general';
@@ -79,13 +99,11 @@ general.addEventListener('click', async (e) => {
     const json = await message_crud.getMessages(num);
     for (const item of json) {
         var messDiv = document.createElement('div');
-        // messDiv.setAttribute("style", "width:100%;height:50px;border:1px solid #808080;margin-bottom:5px;");
         messDiv.classList.add("msg-line");
         var messCon = document.createElement("div");
-        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item.message;
+        messCon.innerHTML = item.user[0].name + ": " + item.message;
         con.appendChild(messDiv);
     }
 });
@@ -99,12 +117,10 @@ lab.addEventListener('click', async (e) => {
     for (const item of json) {
         var messDiv = document.createElement('div');
         messDiv.classList.add("msg-line");
-        // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid green;margin-bottom:5px;");
         var messCon = document.createElement("div");
-        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item.message;
+        messCon.innerHTML = item.user[0].name + ": " + item.message;
         con.appendChild(messDiv);
     }
 });
@@ -118,12 +134,10 @@ project.addEventListener('click', async (e) => {
     for (const item of json) {
         var messDiv = document.createElement('div');
         messDiv.classList.add("msg-line");
-        // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
         var messCon = document.createElement("div");
-        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item.message;
+        messCon.innerHTML = item.user[0].name + ": " + item.message;
         con.appendChild(messDiv);
     }
 });
@@ -137,12 +151,10 @@ exam.addEventListener('click', async (e) => {
     for (const item of json) {
         var messDiv = document.createElement('div');
         messDiv.classList.add("msg-line");
-        // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
         var messCon = document.createElement("div");
-        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item.message;
+        messCon.innerHTML = item.user[0].name + ": " + item.message;
         con.appendChild(messDiv);
     }
 });
@@ -156,12 +168,10 @@ homework.addEventListener('click', async (e) => {
     for (const item of json) {
         var messDiv = document.createElement('div');
         messDiv.classList.add("msg-line");
-        // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
         var messCon = document.createElement("div");
-        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item.message;
+        messCon.innerHTML = item.user[0].name + ": " + item.message;
         con.appendChild(messDiv);
     }
 });
@@ -175,12 +185,10 @@ off_topic.addEventListener('click', async (e) => {
     for (const item of json) {
         var messDiv = document.createElement('div');
         messDiv.classList.add("msg-line");
-        // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
         var messCon = document.createElement("div");
-        // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
         messCon.classList.add("msg");
         messDiv.appendChild(messCon);
-        messCon.innerHTML = item.message;
+        messCon.innerHTML = item.user[0].name + ": " + item.message;
         con.appendChild(messDiv);
     }
 });
@@ -188,14 +196,12 @@ off_topic.addEventListener('click', async (e) => {
 btn.addEventListener('click', async (e) => {
     var messDiv = document.createElement("div");
     messDiv.classList.add("msg-line");
-    // messDiv.setAttribute("style", "width:100%%;height:50px;border:1px solid #808080;margin-bottom:5px;");
     var messCon = document.createElement("div");
-    // messCon.setAttribute("style", "float:left;width:100%;height=30px;overflow:auto;");
-    const data = await message_crud.getUser(parseInt(sessionStorage.getItem('userId')));
-    const user_name = data.name
+    const user_name = await message_crud.getUser(sessionStorage.getItem('userId'));
+    const name = user_name.name;
     messCon.classList.add("msg");
     messDiv.appendChild(messCon);
-    messCon.innerHTML = user_name + ": " + messCol.value;
+    messCon.innerHTML = name + ": " + messCol.value;
     con.appendChild(messDiv);
     const user_id = sessionStorage.getItem('userId');
     const cur_class = class_mapping[curClass.innerHTML];
@@ -204,18 +210,10 @@ btn.addEventListener('click', async (e) => {
     messCol.value = "";
 });
  
- 
-/*
-//spin every five seconds and pull any new messages
-const d = new Date();
-let startTime = d.getTime();
-while (true) {
-    if (d.getTime() - startTime > 5) {
-        //pull new messages here
- 
-        //update startTime
-        startTime = d.getTime();
-    }
-}
-*/
+out.addEventListener('click', async (e) => {
+    sessionStorage.removeItem('classId');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('class_name');
+    window.location = '/client/Login/login.html';
+});
 

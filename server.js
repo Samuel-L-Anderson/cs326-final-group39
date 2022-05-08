@@ -3,9 +3,11 @@ import { readFile, writeFile } from 'fs/promises';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import * as path from 'path';
+import dotenv from 'dotenv';
  
  
 const app = express();
+dotenv.config();
 const port = 3000;
  
 app.use(express.json());
@@ -14,14 +16,13 @@ app.use(logger('dev'));
 app.use('/client', express.static("client"));
  
  
-//const MONGO_URI = 'mongodb+srv://39gs:ilovecoding@cluster0.1lsex.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-const MONGO_URI = 'mongodb+srv://326group39:ilovecoding@cluster0.69p7f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+
  
 //CLASSES ORDERED BY ID 1-4 etc
 //CHANNELS ORDERED BY ID 1.1-1.6 etc
 //comment
  
-mongoose.connect(MONGO_URI, {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -126,20 +127,18 @@ app.get('/classIds', async (request, response) => {
             console.log('error: ', error);
         });
 });
-  
+ 
 app.get('/class', async (request, response) => {
     //http://localhost:3000/class?class=cs326
     //Retrieves information of class, i.e. student count, id
     const options = request.query;
     classModel.find({ "classid": options.classid })
         .then((data) => {
-            console.log(data);
             response.send(data);
  
         })
         .catch((error) => {
             console.log(error);
- 
         });
 });
  
@@ -148,7 +147,6 @@ app.get('/classes', async (request, response) => {
     //Retrieves all classes and info
     classModel.find({})
         .then((data) => {
-            console.log('Data: ', data);
             response.send(data);
         })
         .catch((error) => {
@@ -167,7 +165,7 @@ app.get('/class/user', async (request, response) => {
         .catch((error) => {
             console.log('error', error);
         });
-});
+})
  
 app.get('/class/message', async (request, response) => {
     //http://localhost:3000/class/message?class_id=cs446
@@ -175,7 +173,6 @@ app.get('/class/message', async (request, response) => {
     const options = request.query;
     message.find({ "class.class_id": { $eq: options.class_id } }, { message: 1, _id: 0 })
         .then((data) => {
-            console.log("Data: ", data);
             response.send(data);
         })
         .catch((err) => {
@@ -187,9 +184,8 @@ app.get('/class/channel/message', async (request, response) => {
     //http://localhost:3000/class/channel/message?channel=1.2
     //Retrieves messages associated with channel and class
     const options = request.query;
-    message.find({ "channel": { $eq: options.channel } }, { message: 1, _id: 0 })
+    message.find({ "channel": { $eq: options.channel } })
         .then((data) => {
-            console.log("Data", data);
             response.send(data);
         })
         .catch((err) => {
@@ -204,12 +200,11 @@ app.get('/user', async (request, response) => {
     const options = request.query;
     spireUserModel.findOne({ spire_id: { $eq: options.user_id } })
         .then((data) => {
-            console.log("Data: ", data);
             response.send(data);
         })
         .catch((err) => {
             console.log("Error", err);
-        })
+        });
 });
  
 app.post('/message', async (request, response) => {
@@ -231,6 +226,7 @@ app.post('/message', async (request, response) => {
     m.save();
     response.send("OK");
 });
+
  
 app.post('/createAssignment', async (request, response) => {
     const details = request.query;
