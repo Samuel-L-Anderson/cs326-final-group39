@@ -72,7 +72,7 @@ const userModel = mongoose.model('user', userSchema);
 
 const assignmentSchema = new Schema({
     name: String, 
-    assignment_id: Number, 
+    user_id: Number, 
     date: String, 
     class_id: Number, 
 });
@@ -81,8 +81,7 @@ const assignmentModel = mongoose.model('assignment', assignmentSchema);
 
 app.get('/upcomingAssignments', async (request, response) => {
     const options = request.query; 
-    const userId = options.user_id;
-    assignmentModel.find({spire_id: { $eq: options.user_id})
+    assignmentModel.find({user_id: { $eq: options.user_id}})
         .then((data) => {
             console.log(data);
             data.sort((a,b) =>  new Date(b.date) - new Date(a.date));
@@ -92,12 +91,35 @@ app.get('/upcomingAssignments', async (request, response) => {
         }).catch((error) => {
             console.log('error:', error);
         })
-})
+});
+
+app.get('/assignments', async (request, response) => {
+    const options = request.query; 
+    assignmentModel.find({user_id: { $eq: options.user_id}})
+    .then((data) => {
+        console.log(data);
+        data.sort((a,b) =>  new Date(b.date) - new Date(a.date));
+        response.send(data);
+    }).catch((error) => {
+        console.log('error:', error);
+    })
+});
   
 app.get('/dashboard', async (request, response) => {
-    classModel.find({})
+    const options = request.query;
+    classModel.findOne({class_id: { $eq: options.class_id}})
         .then((data) => {
-            console.log('Data: ', data);
+            response.send(data);
+        })
+        .catch((error) => {
+            console.log('error: ', error);
+        });
+});
+
+app.get('/classIds', async (request, response) => {
+    const options = request.query;
+    spireUserModel.findOne({spireid: { $eq: options.user_id}})
+        .then((data) => {
             response.send(data);
         })
         .catch((error) => {

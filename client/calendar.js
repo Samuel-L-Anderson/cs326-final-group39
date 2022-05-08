@@ -1,148 +1,109 @@
-const date_element = document.getElementById("date_today");
-const month_element = document.getElementById("month");
- 
-const monthNames = ["January", "February", "March", "April", "May", "June",
- "July", "August", "September", "October", "November", "December"];
- 
-let today = new Date();
-const day = today.getDate();
-const month = today.getMonth() + 1;
-const year = today.getFullYear();
- 
-const todayString = month + "/" + day + "/" + year;
- 
-date_element.innerText = todayString;
-month_element.innerText = monthNames[month-1];
- 
-const createButton = document.getElementById('create');
-const updateButton = document.getElementById('update');
-const deleteButton = document.getElementById('delete');
- 
-const dates = document.getElementById("day_wrap")
-let daysInMonth = new Date(year, month, 0).getDate();
- 
-console.log(daysInMonth);
- 
- 
-for(let i = 0; i<daysInMonth; i++)
-{
- let dateBox = document.createElement("li");
- dateBox.setAttribute("id", `${i + 1}`);
- let dateText = document.createTextNode(i+1);
- dateBox.appendChild(dateText);
- dates.appendChild(dateBox);
- 
- let dateAssignments = await readDate(month, (i+1), year);
- 
- dateAssignments.forEach(element=> {
- 
-   let assignmentDate = element[day];
-    if(assignmentDate === (i+1))
-   {
-     dateBox.className = 'assignment-day';
-   }
- });
+import * as crud from './dashboard_crud.js';
+//get userId from session storage 
+const userId = sessionStorage.getItem("userId");
+//load in assignments
+const assignments = await crud.fetchAssignments(32303431);
+//set current date 
+const curDate = new Date();
+let curMonth = curDate.getMonth();
+let curYear = curDate.getFullYear();
+const daysInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const curMonthDays = daysInMonths[curMonth];
+
+function findAssignments(date) {
+  const asnArr = [];
+  for (let i = 0; i < assignments.length; i++) {
+    if (new Date(assignments[i].date).toDateString() === date.toDateString()) {
+      asnArr.push(assignments[i]);
+    }
+  }
+  return asnArr;
 }
- 
-dates.addEventListener('click', async (e) => {
- let day_selected = e.target.id;
- const todayString = month + "/" + day_selected + "/" + year;
- date_element.innerText = todayString;
- 
- let assignmentData = await readDate(month, day_selected, year);
- 
- assignmentData.forEach(element=> {
-   const assignmentWrapper = document.getElementById("assignment-wrapper");
-   $('#assignment-wrapper div').empty();
- 
-   const assignmentList = document.getElementById("assignments-ul");
-   let assignmentName = element[nameData];
- 
-   let cell = document.createElement('li');
-   let text = document.createTextNode(assignmentName);
-   cell.appendChild(text);
-   assignmentList.appendChild(cell);
- 
-  assignmentWrapper.appendChild(assignmentList);
- });
+
+function loadCalendar(month) {
+  //clear calendar 
+  for (let i = 1; i < 43; i++) {
+    const elem = document.getElementById(i);
+    elem.innerHTML=" ";
+  }
+  document.getElementById('displayClass').innerHTML = "";
+  document.getElementById('displayName').innerHTML = "";
+  document.getElementById('displayDate').innerHTML = "";
+  //load month Name
+  if (month > 11) {
+    curMonth = month % 12; 
+    curYear++;
+  } else if (month < 0) {
+    curMonth = 11; 
+    curYear--; 
+  } else {
+    curMonth = month; 
+  }
+  const monthName = document.getElementById('curMonth');
+  monthName.innerHTML = monthNames[curMonth] + " " + curYear;
+
+  //fill in month from beginning
+  const monthStr = curMonth + 1; 
+  const start = new Date(monthStr + "/01/" +  curYear);
+  let counter = 1; 
+  for (let i = (start.getDay() + 1); counter < daysInMonths[curMonth] + 1; i++) {  
+    const daySquare = document.getElementById(i);
+    const arr = findAssignments(new Date(monthStr + "/" + counter + "/" + curYear));
+    if (arr.length > 0) {
+      daySquare.innerHTML = "<button id='day" + counter + "'class='btn btn-success'>" + counter +  "</button>";
+    } else {
+      daySquare.innerHTML = "<button id='day" + counter + "'class='btn btn-outline-light'>" + counter +  "</button>";
+    }
+    counter++;
+  }
+
+  //adding event listeners 
+  for (let i = 1; i < daysInMonths[curMonth] + 1; i++) {
+    const ds = "day" + i;
+    const but = document.getElementById(ds);
+    but.addEventListener('click', async(e) => {
+      const arr = findAssignments(new Date(monthStr + "/" + i + "/" + curYear));
+      document.getElementById('displayClass').innerHTML = (arr.length > 0) ? arr[0].class_id : "";
+      document.getElementById('displayName').innerHTML = (arr.length > 0) ? arr[0].name : "";
+      document.getElementById('displayDate').innerHTML = (arr.length > 0) ? arr[0].date : "";
+    });
+  }
+}
+
+
+
+
+//previous month
+const prevMonth = document.getElementById('prev');
+prevMonth.addEventListener('click', async(e) => {
+  loadCalendar(curMonth - 1);
 });
- 
- 
-createButton.addEventListener('click', async (e) => {
-   const name = window.prompt("Assignment name");
-   const user_month = window.prompt("Assignment Month (#)");
-   const user_day = window.prompt("Assignment Day");
-   const user_assignment_id = window.prompt("Assignment ID");
-   const user_class_id = window.prompt("Class ID");
- 
-   const json = await createAssignment(user_month, user_day, year, name, user_assignment_id, user_class_id);
-   alert(`Assignment ${assignment_id} created`);
- });
- 
- updateButton.addEventListener('click', async (e) => {
-   const name = window.prompt("Assignment name");
-   const user_month = window.prompt("Assignment Month (#)");
-   const user_day = window.prompt("Assignment Day");
-   const user_assignment_id = window.prompt("Assignment ID");
-   const user_class_id = window.prompt("Class ID");
- 
-   const json = await updateAssignment(user_month, user_day, year, name, user_assignment_id, user_class_id);
-   alert(`Assignment ${assignment_id} updated`);
- });
- 
- 
- 
- deleteButton.addEventListener('click', async (e) => {
-   const user_assignment_id = window.prompt("Assignment ID to delete");
-   const json = await deleteAssignment(user_assignment_id);
-   alert(`Assignment ${user_assignment_id} deleted`);
- });
- 
- 
-export async function createAssignment(month, day, year, name, assignment_id, class_id) {
-   const response = await fetch(`/createAssignment?month=${month}&day=${day}}&year=${year}
-                                   &assignment_id=${assignment_id}&class_id=${class_id}`, {
-     method: 'POST',
-     headers: {
-       'Content-Type': 'application/json',
-     },
-     body: JSON.stringify({month:month, day: day, year: year, name: name, assignment_id: assignment_id, class_id: class_id})
-   });
-   const data = await response.json();
-   return data;
- }
-  export async function readDate(month, day, year) {
-   try {
-     const response = await fetch(`/readDate?month=${month}&day=${day}}&year=${year}`, {
-       method: 'GET',
-     });
-     const data = await response.json();
-     return data;
-   } catch (err) {
-     console.log(err);
-   }
- }
-  export async function updateAssignment(month, day, year, name, assignment_id, class_id) {
-   const response = await fetch(`/updateAssignment?month=${month}&day=${day}}&year=${year}
-   &assignment_id=${assignment_id}&class_id=${class_id}`, {
-     method: 'PUT',
-     body: JSON.stringify({month:month, day: day, year: year, name: name, assignment_id: assignment_id, class_id: class_id}),
-     headers: {
-       'Content-Type': 'application/json',
-     },
-   });
-   const data = await response.json();
-   return data;
- }
-  export async function deleteAssignment(assignment_id) {
-   const response = await fetch(`/deleteAssignment?assignment_id=${assignment_id}`, {
-     method: 'DELETE',
-     body: JSON.stringify({ assignment_id:assignment_id }),
-     headers: {
-       'Content-Type': 'application/json',
-     },
-   });
-   const data = await response.json();
-   return data;
- }
+
+const nextMonth = document.getElementById('next');
+nextMonth.addEventListener('click', async(e) => {
+  loadCalendar(curMonth + 1);
+});
+
+//Navar redirect 
+const homebut = document.getElementById("home");
+homebut.addEventListener('click', async(e) => {
+    window.location = "/client/dashboard.html";
+});
+
+const logbut = document.getElementById("logout");
+logbut.addEventListener('click', async(e) => {
+  sessionStorage.removeItem("userId");
+  sessionStorage.removeItem("class_name");
+  sessionStorage.removeItem("classId");
+  window.location = "/client/Login/login.html";
+});
+
+
+
+
+//load calendar off start
+loadCalendar(curMonth);
+
+
 

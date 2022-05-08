@@ -1,13 +1,28 @@
 
 import * as crud from './dashboard_crud.js';
 
+//getting current userId
+const userId = sessionStorage.getItem("userId");
+
+
+//load in classIds for user 
+const spireUserData = await crud.fetchClassIds(32303431);
+const classIdArr = spireUserData.class_ids;
+
+
 //load in class data from database
-const classesData = await crud.fetchDashboard();
+const classesData = [];
+for (let i = 0; i < classIdArr.length; i++) {
+    const elem = await crud.fetchClass(classIdArr[i]);
+    classesData.push(elem);
+}
 const numClasses = classesData.length;
 
+
+
 //load in upcoming assignments from database 
-const upcoming = await crud.fetchUpcomingAssignments();
-console.log(upcoming);
+const upcoming = await crud.fetchUpcomingAssignments(32303431);
+
 
 //establish card deck as element for appening to 
 const cardDeck = document.getElementById('dashDeck');
@@ -21,6 +36,16 @@ function getClassName(id) {
     }
 }
 
+function getDueToday(id) {
+    const curDate = new Date()
+    curDate.setHours(0, 0, 0, 0);
+    for (let i = 0; i < upcoming.length; i++) {
+        if (new Date(upcoming[i].date).toDateString() == curDate.toDateString() && upcoming[i].class_id === id) {
+            return upcoming[i].name;
+        } 
+    }
+}
+
 //dyanmically create card deck;
 for (let i = 0; i < numClasses; i++) {
     const card = document.createElement("div");
@@ -30,8 +55,9 @@ for (let i = 0; i < numClasses; i++) {
     const b = "<div id = 'class_name' class='card-header style='border-color: white;'> Class Name: " + classesData[i].title + "</div>";
     const c = "<div class='card-body'></div>";
     const d = "<h6 id='class_professor' class='card-title ml-2'>Professor: " + classesData[i].professor+ "</h6>";
-    const e = "<h6 id='class_dueToday' class='card-title ml-2'>Due Today: </h6>";
-    const f = "<button id='chat" + (i + 1) + "' class=btn btn-outline-danger style = 'border:solid'> Class Chat</button>"
+    const dt = (getDueToday(classesData[i].class_id) === undefined) ? "N/A" : getDueToday(classesData[i].class_id);
+    const e = "<h6 id='class_dueToday' class='card-title ml-2'>Due Today: " + dt + "</h6>";
+    const f = "<button id='chat" + (i + 1) + "'class='btn btn-outline-light'> Class Chat</button>"
     const g = "</div>";
     card.innerHTML = a + b + c + d + e + f + g;
 }
@@ -43,7 +69,7 @@ for (let i = 0; i < numClasses; i++) {
     chatBut.addEventListener('click', async(e) => {
         window.location = "/client/message-board.html";
         sessionStorage.setItem("class_name", classesData[i].title);
-        console.log(sessionStorage.getItem('class_name'));
+        sessionStorage.setItem("classId", classesData[i].class_id);
         sessionStorage.setItem("userId", 32303431);
     });
 }
@@ -72,3 +98,18 @@ homebut.addEventListener('click', async(e) => {
     window.location = "/client/dashboard.html";
 });
 
+//logoutredirect
+const logoutBut = document.getElementById("logout");
+logoutBut.addEventListener('click', async(e) => {
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("class_name");
+    sessionStorage.removeItem("classId");
+    window.location = "/client/Login/login.html";
+}); 
+
+//Cal redirect 
+const calBut = document.getElementById("calLink");
+calBut.addEventListener('click', async(e) => {
+    sessionStorage.setItem("userId", userId);
+    window.location = "/client/project_calendar.html";
+});
