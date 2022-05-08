@@ -1,39 +1,55 @@
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="dashboard_client.js"></script>
+    <title>Initial Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script type="module" src="dashboard_client.js"></script>
-  <title>Initial Dashboard</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      
+        <button type="button" class="btn btn-outline-dark" id="home">HOME</button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto ">
+            
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <button type="button" id="logout">LOGOUT</button>
+          </form>
+        </div>
+      </nav>
+      <h1 style="text-align: center; border: solid; padding: 2%; margin: auto;">-COURSIFY UMASS-</h1>
+       <div class="col d-flex justify-content-center">
+         
 
-</head>
+       <div id = dashDeck class="card-deck mx-auto mt-5"> </div>
 
-<body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+       </div>    
 
-    <button type="button" class="btn btn-outline-dark">HOME</button>
+       <h3 style="text-align: center; margin: auto;">Upcoming Assignments</h3>
+       <div class = "col d-flex justify-content-center">
+        <div id = "calprev" class = "container" style="padding: 2%;">
+          <!--Upcoming assignments dynamically rendered here-->
+          <div class="row">
+            <div class="col" style="text-align: center; background-color: grey; border: solid;">
+              Class
+            </div>
+            <div class="col-6" style=" text-align: center; background-color: grey; border: solid;">
+              Assignment Name
+            </div>
+            <div class="col" style=" text-align: center; background-color: grey; border: solid;">
+              Due Date
+            </div>
+          </div>
+        </div>
+       </div>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto ">
-
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <button type="submit">Logout</button>
-      </form>
-    </div>
-  </nav>
-
-  <!-- This will be done dybamically once we are pulling data from the backend and will therefore
-       probably have to be done with Javascript-->
-  <div class="col d-flex justify-content-center">
-
-    <div id=dashDeck class="card-deck mx-auto mt-5"> </div>
-
-  </div>
-
-</body>
-
+       <div class = "col d-flex justify-content-center">
+       <button id='calLink' class='btn btn-outline-dark' style = 'border:solid'> Calendar</button>
+        </div>
+  </body>
 </html>

@@ -1,5 +1,5 @@
 import * as message_crud from './message_crud.js'
-
+ 
 var messCol = document.getElementById("messColumn");
 var btn = document.getElementById("comment");
 var con = document.getElementById("content");
@@ -13,16 +13,16 @@ var curChannel = document.getElementById('curChannel');
 var curClass = document.getElementById('curDiscussionBoard');
 var u = document.getElementById('m-name');
 var home = document.getElementById('home');
-
-
+var out = document.getElementById('logout');
+ 
 curClass.innerHTML = sessionStorage.getItem('class_name');
 curClass.style.color = 'white';
-
-
+ 
+ 
 home.addEventListener('click', async (e) => {
     window.location = '/client/dashboard.html';
 });
-
+ 
 async function generateClassMapping() {
     const j = await message_crud.getClasses();
     let mapping = {};
@@ -31,9 +31,9 @@ async function generateClassMapping() {
     }
     return mapping;
 }
-
+ 
 const class_mapping = await generateClassMapping();
-
+ 
 const channel_mapping = {
     'general': 0.1,
     'lab': 0.2,
@@ -42,13 +42,13 @@ const channel_mapping = {
     'homework': 0.5,
     'off topic': 0.6
 }
-
+ 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
 }
-
+ 
 async function renderMembers(classID) {
     const j = await message_crud.getClassUsers(classID);
     let mem = [];
@@ -57,9 +57,9 @@ async function renderMembers(classID) {
     }
     return mem;
 }
-
+ 
 const memberArray = await renderMembers(sessionStorage.getItem('classId'));
-
+ 
 function buildUsers() {
     removeAllChildNodes(u);
     for (const item of memberArray) {
@@ -68,9 +68,9 @@ function buildUsers() {
         u.appendChild(userDiv);
     }
 }
-
+ 
 buildUsers();
-
+ 
 async function renderInitialMessages() {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'general';
@@ -87,10 +87,10 @@ async function renderInitialMessages() {
         con.appendChild(messDiv);
     }
 }
-
+ 
 await renderInitialMessages();
-
-
+ 
+ 
 general.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'general';
@@ -107,7 +107,7 @@ general.addEventListener('click', async (e) => {
         con.appendChild(messDiv);
     }
 });
-
+ 
 lab.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'lab';
@@ -124,7 +124,7 @@ lab.addEventListener('click', async (e) => {
         con.appendChild(messDiv);
     }
 });
-
+ 
 project.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'project';
@@ -141,7 +141,7 @@ project.addEventListener('click', async (e) => {
         con.appendChild(messDiv);
     }
 });
-
+ 
 exam.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'exam';
@@ -158,7 +158,7 @@ exam.addEventListener('click', async (e) => {
         con.appendChild(messDiv);
     }
 });
-
+ 
 homework.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'homework';
@@ -175,7 +175,7 @@ homework.addEventListener('click', async (e) => {
         con.appendChild(messDiv);
     }
 });
-
+ 
 off_topic.addEventListener('click', async (e) => {
     removeAllChildNodes(con);
     curChannel.innerHTML = 'off topic';
@@ -192,7 +192,7 @@ off_topic.addEventListener('click', async (e) => {
         con.appendChild(messDiv);
     }
 });
-
+ 
 btn.addEventListener('click', async (e) => {
     var messDiv = document.createElement("div");
     messDiv.classList.add("msg-line");
@@ -209,18 +209,11 @@ btn.addEventListener('click', async (e) => {
     const json = await message_crud.postMessage(messCol.value, user_id, (cur_class + cur_channel));
     messCol.value = "";
 });
+ 
+out.addEventListener('click', async (e) => {
+    sessionStorage.removeItem('classId');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('class_name');
+    window.location = '/client/Login/login.html';
+});
 
-
-/*
-//spin every five seconds and pull any new messages 
-const d = new Date();
-let startTime = d.getTime();
-while (true) {
-    if (d.getTime() - startTime > 5) {
-        //pull new messages here
-
-        //update startTime 
-        startTime = d.getTime();
-    }
-}
-*/

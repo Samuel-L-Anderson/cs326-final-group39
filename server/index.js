@@ -1,14 +1,14 @@
-import 'dotenv/config';
 import express from 'express';
 import expressSession from 'express-session';
 import users from './users.js';
 import auth from './auth.js';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { dirname} from 'path';
+import path from 'path';
 import logger from 'morgan';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv'
 
+let id = '';
 
 // We will use __dirname later on to send files back to the client.
 const __filename = fileURLToPath(import.meta.url);
@@ -16,7 +16,7 @@ const __dirname = dirname(dirname(__filename));
 
 // Create the Express app
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 9000;
 
 // Session configuration
 const sessionConfig = {
@@ -31,9 +31,10 @@ app.use(expressSession(sessionConfig));
 // Allow JSON inputs
 app.use(express.json());
 // Allow URLencoded data
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true}));
 // Allow static file serving
-app.use(express.static('client'));
+app.use(express.static(path.join(__dirname, 'client')));
+// app.use(express.static(__dirname));
 // Configure our authentication strategy
 app.use(logger('dev'));
 // app.use('/client', express.static("client"));
@@ -60,7 +61,15 @@ app.get('/', checkLoggedIn, (req, res) => {
 app.get('/login', (req, res) =>{
   res.sendFile('client/login.html',{root: __dirname})
 });
-
+app.get('/message-board',(req, res) =>{
+  res.sendFile('client/message-board.html',{root: __dirname})
+});
+app.get('/dashboard',(req, res) =>{
+  res.sendFile('client/dashboard.html',{root: __dirname})
+});
+app.get('/calendar',(req, res) =>{
+  res.sendFile('client/calendar.html',{root: __dirname})
+});
 // Handle post data from the login.html form.
 app.post(
   '/login',
@@ -92,7 +101,7 @@ app.post('/register', (req, res) => {
 
 // Register URL
 app.get('/register', (req, res) =>
-  res.sendFile(__dirname +'client/register.html', { root: __dirname })
+  res.sendFile('client/register.html', { root: __dirname })
 );
 
 // Private data
@@ -101,6 +110,7 @@ app.get(
   checkLoggedIn, // If we are logged in (notice the comma!)...
   (req, res) => {
     // Go to the user's page.
+    id = req.user;
     res.redirect('/private/' + req.user);
   }
 );
@@ -110,20 +120,14 @@ app.get(
   '/private/:userID/',
   checkLoggedIn, // We also protect this route: authenticated...
   (req, res) => {
-    app.post('/private',(req,res) =>{
-      re
-    })
     // Verify this is the right user.
     if (req.params.userID === req.user) {
-      res.sendFile(`client/message-board.html`, { root: __dirname });
+      res.redirect('/dashboard');
     } else {
       res.redirect('/private/');
     }
   }
 );
-
-dotenv.config();
-
 
 let MONGO_URI = "mongodb+srv://tpatra:tarun@cluster0.69p7f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 mongoose.connect(MONGO_URI, {
@@ -136,7 +140,7 @@ mongoose.connection.on('connected', () => {
 });
 
 var Schema = mongoose.Schema;
-
+ 
 const messageSchema = new Schema({
     user: [{
         name: { type: String },
@@ -151,59 +155,109 @@ const messageSchema = new Schema({
     }],
     channel: String
 });
-
 const message = mongoose.model("Message", messageSchema);
-
+ 
 const classSchema = new Schema({
     title: String,
     class_id: Number,
     professor: String,
 });
-
-
 const classModel = mongoose.model('Class', classSchema);
-
+ 
 const spireUserSchema = new Schema({
     spireid: Number,
     class_ids: [Number],
     name: String
 });
-
 const spireUserModel = mongoose.model('spire_user', spireUserSchema);
-
+ 
 const userSchema = new Schema({
     name: String,
     password: String,
     spire_id: Number
 });
-
 const userModel = mongoose.model('user', userSchema);
 
-app.get('/dashboard', async (request, response) => {
-    classModel.find({})
+const assignmentSchema = new Schema({
+    name: String, 
+    user_id: Number, 
+    date: String, 
+    class_id: Number, 
+});
+const assignmentModel = mongoose.model('assignment', assignmentSchema);
+
+
+app.get('/upcomingAssignments', async (request, response) => {
+    const options = request.query; 
+    assignmentModel.find({user_id: { $eq: options.user_id}})
+        .then((data) => {
+            console.log(data);
+            data.sort((a,b) =>  new Date(b.date) - new Date(a.date));
+            console.log(data);
+            data.slice(-5);
+            response.send(data);
+        }).catch((error) => {
+            console.log('error:', error);
+        })
+});
+
+app.get('/assignments', async (request, response) => {
+    const options = request.query; 
+    assignmentModel.find({user_id: { $eq: options.user_id}})
+    .then((data) => {
+        console.log(data);
+        data.sort((a,b) =>  new Date(b.date) - new Date(a.date));
+        response.send(data);
+    }).catch((error) => {
+        console.log('error:', error);
+    })
+});
+
+app.get('/spireID', async (request, response) => {
+  const options = request.query;
+  console.log("here");
+  console.log(id);
+  response.send(id);
+});
+app.get('/dashboards', async (request, response) => {
+    const options = request.query;
+    console.log(options);
+    classModel.findOne({class_id: { $eq: options.class_id}})
         .then((data) => {
             response.send(data);
         })
         .catch((error) => {
             console.log('error: ', error);
         });
-})
+});
 
-
+app.get('/classIds', async (request, response) => {
+    const options = request.query;
+    spireUserModel.findOne({spireid: { $eq: options.user_id}})
+        .then((data) => {
+            response.send(data);
+        })
+        .catch((error) => {
+            console.log('error: ', error);
+        });
+});
+ 
 app.get('/class', async (request, response) => {
     //http://localhost:3000/class?class=cs326
     //Retrieves information of class, i.e. student count, id
     const options = request.query;
+    console.log(options);
     classModel.find({ "classid": options.classid })
         .then((data) => {
             response.send(data);
-
+            console.log("hellos");
+            console.log(data);
         })
         .catch((error) => {
             console.log(error);
         });
 });
-
+ 
 app.get('/classes', async (request, response) => {
     //http://localhost:3000/classes
     //Retrieves all classes and info
@@ -215,7 +269,7 @@ app.get('/classes', async (request, response) => {
             console.log('error: ', error);
         });
 });
-
+ 
 app.get('/class/user', async (request, response) => {
     //get all users associated with specific class
     // /class/user?class_id=1
@@ -228,7 +282,7 @@ app.get('/class/user', async (request, response) => {
             console.log('error', error);
         });
 })
-
+ 
 app.get('/class/message', async (request, response) => {
     //http://localhost:3000/class/message?class_id=cs446
     //Retrieve all messages associated with class
@@ -241,7 +295,7 @@ app.get('/class/message', async (request, response) => {
             console.log("error", err);
         });
 });
-
+ 
 app.get('/class/channel/message', async (request, response) => {
     //http://localhost:3000/class/channel/message?channel=1.2
     //Retrieves messages associated with channel and class
@@ -254,8 +308,8 @@ app.get('/class/channel/message', async (request, response) => {
             console.log("Error", err);
         });
 });
-
-
+ 
+ 
 app.get('/user', async (request, response) => {
     //http://localhost:3000/user?user_id=1
     //Retrieve by ID => name not unique
@@ -266,9 +320,9 @@ app.get('/user', async (request, response) => {
         })
         .catch((err) => {
             console.log("Error", err);
-        })
+        });
 });
-
+ 
 app.post('/message', async (request, response) => {
     //http://localhost:3000/message?content=this%20is%20a%20message&userID=1&channel=1.1
     const options = request.query;
@@ -288,6 +342,43 @@ app.post('/message', async (request, response) => {
     m.save();
     response.send("OK");
 });
+
+ 
+app.post('/createAssignment', async (request, response) => {
+    const details = request.query;
+    createAssignment(response,
+        parseInt(details.month),
+        parseInt(details.day),
+        parseInt(details.year),
+        details.name,
+        parseInt(details.assignment_id),
+        parseInt(details.class_id));
+});
+ 
+app.get('/readDate', async (request, response) => {
+    const details = request.query;
+    readDate(response,
+        parseInt(details.month),
+        parseInt(details.day),
+        parseInt(details.year));
+});
+ 
+app.put('/updateAssignment', async (request, response) => {
+    const details = request.query;
+    updateAssignment(response,
+        parseInt(details.month),
+        parseInt(details.day),
+        parseInt(details.year),
+        details.name,
+        parseInt(details.assignment_id),
+        parseInt(details.class_id));
+});
+ 
+app.delete('/deleteAssignment', async (request, response) => {
+    const details = request.query;
+    deleteAssignment(response, parseInt(details.assignment_id));
+});
+
 app.listen(port, () => {
   console.log(`App now listening at http://localhost:${port}`);
 });

@@ -6,17 +6,17 @@ h5,
 h6 {
     font-family: 'Corben', Georgia, Times, serif;
 }
-
+ 
 p,
 div {
     font-family: 'Nobile', Helvetica, Arial, sans-serif;
     font-size: 10px;
 }
-
+ 
 /* body {
     background: url(/img/stripes-light.png) repeat 0 0;
 } */
-
+ 
 .btn {
     border: none;
     background-color: inherit;
@@ -25,64 +25,64 @@ div {
     cursor: pointer;
     display: inline-block;
     color: #A3A2A6;
-
+ 
 }
-
+ 
 .btn:hover {
     background: #2a3034;
 }
-
+ 
 .top-bar {
     background-color: #212529;
     padding-left: 50px;
 }
-
+ 
 .btn {
     display: inline-block;
     width: 24%;
     text-align: center;
 }
-
+ 
 .main {
     text-align: center;
     padding: 5px;
 }
-
+ 
 .main {
     border-bottom: 1px solid #2C2A2F;
 }
-
+ 
 .left {
     flex: 1;
     display: flex;
     flex-direction: column;
     border-right: 1px solid #2C2A2F;
 }
-
+ 
 .left .class-names {
     background-color: #19171D;
     height: 100vh;
 }
-
+ 
 .left .class-names .c-name>p {
     text-indent: 20px;
     font-size: 10px;
 }
-
+ 
 .right {
     flex: 1;
     display: flex;
     flex-direction: column;
-
+ 
     background-color: #19171D;
 }
-
+ 
 .right .members {
     margin: 2%;
     background-color: #19171D;
     height: 100vh;
 }
-
+ 
 .right .members #m-name {
     padding: 10px;
     color: #A3A2A6;
@@ -90,25 +90,25 @@ div {
     font-size: 12px;
     overflow: auto;
 }
-
+ 
 textarea {
     width: 70%;
     position: absolute;
     margin-left: 250px;
     bottom: 30px;
 }
-
+ 
 #sendMessage {
     display: flex;
 }
-
+ 
 #messColumn {
     background-color: #222529;
     border-radius: 5px;
     width: 60%;
     margin: 10px;
 }
-
+ 
 #comment {
     position: absolute;
     right: 0;
@@ -118,7 +118,7 @@ textarea {
     width: 50px;
     height: 50px;
 }
-
+ 
 input[type='button'] {
     width: 100%;
     height: 50px;
@@ -128,15 +128,15 @@ input[type='button'] {
     font-family: 'Nobile', Helvetica, Arial, sans-serif;
     font-size: 12px;
 }
-
+ 
 .buttn:hover {
     background: #26242B;
 }
-
+ 
 .members {
     background-color: #19171D;
 }
-
+ 
 .msg-bod {
     display: flex;
     width: 300px;
@@ -144,17 +144,13 @@ input[type='button'] {
     height: 100%;
     width: 100%;
 }
-
+ 
 #content {
     width: 80%;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    position: absolute;
-    height: 70%;
-    overflow: auto;
 }
-
+ 
 .msg-line {
     padding: 20px;
     margin: 10px;
@@ -163,27 +159,27 @@ input[type='button'] {
     border-radius: 5px;
     color: #A3A2A6;
 }
-
+ 
 .class-body {
     flex: 5;
     display: flex;
     flex-direction: column;
 }
-
+ 
 .message-body {
     display: flex;
 }
-
+ 
 .written {
     flex: 5;
     display: flex;
     flex-direction: column;
 }
-
+ 
 #curChannel {
     color: white
 }
-
+ 
 #curClass {
     color: white;
 }

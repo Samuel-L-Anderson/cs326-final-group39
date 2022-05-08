@@ -5,6 +5,7 @@ class Users {
     this.users = { emery: 'compsci326' };
   }
 
+  
   // Returns true iff the user exists.
   findUser(username) {
     if (!this.users[username]) {
